@@ -75,22 +75,22 @@ WSGI_APPLICATION = 'Landlot.wsgi.application'
 
 DATABASES = {
 
-    "default": {
-        'ENGINE': 'sql_server.pyodbc',
-        "NAME": "LandoLet",
-        "USER": "sa",
-        "PASSWORD": "mohamaD1380@",
-        "HOST": "localhost",
-        "PORT": "1433",
-        "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
-        },
-    },
+    # "default": {
+    #     'ENGINE': 'sql_server.pyodbc',
+    #     "NAME": "LandoLet",
+    #     "USER": "sa",
+    #     "PASSWORD": "mohamaD1380@",
+    #     "HOST": "localhost",
+    #     "PORT": "1433",
+    #     "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
+    #     },
+    # },
 
 
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 

@@ -1,24 +1,49 @@
 from django.db import models
 
-from django.contrib.auth.models import AbstractUser
-from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 
-from django.core.validators import RegexValidator
 
-class User(AbstractUser):
-    username = models.CharField( null=True,unique=True,max_length=20,blank=True)
-    phoneNumberRegex = RegexValidator(regex = r"^\+?98?\d{8,10}$")
-    phone = models.CharField(validators = [phoneNumberRegex], max_length = 13, unique = True)
-    email=models.EmailField(_('email address'),blank=True)
-    title = models.CharField(max_length=5,blank=True,null=True)
-    birth = models.DateField(blank=True,null=True)
-    address = models.CharField(max_length=255,blank=True,null=True)
-    city = models.CharField(max_length=50,blank=True,null=True)
-    zip = models.CharField(max_length=5,blank=True,null=True)
-    USERNAME_FIELD='phone'
-    REQUIRED_FIELDS = ['username','email', 'first_name', 'last_name']
-    def __str__(self):
-        return "{}".format(self.phone)
+
+        
+class Roles(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
+    regdate = models.CharField(db_column='RegDate', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    rolename = models.TextField(db_column='RoleName', blank=True, null=True)  # Field name made lowercase.
+    comments = models.TextField(db_column='Comments', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Roles'
+
+
+class Users(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
+    regdate = models.CharField(db_column='RegDate', max_length=10, blank=True, null=True)  # Field name made lowercase.
+    password = models.TextField(db_column='Password')  # Field name made lowercase.
+    type = models.IntegerField(db_column='Type')  # Field name made lowercase.
+    username = models.TextField(db_column='Username', blank=True, null=True)  # Field name made lowercase.
+    firstname = models.TextField(db_column='FirstName', blank=True, null=True)  # Field name made lowercase.
+    lastname = models.TextField(db_column='LastName', blank=True, null=True)  # Field name made lowercase.
+    email = models.TextField(db_column='Email', blank=True, null=True)  # Field name made lowercase.
+    postalcode = models.TextField(db_column='PostalCode', blank=True, null=True)  # Field name made lowercase.
+    fulladdress = models.TextField(db_column='FullAddress', blank=True, null=True)  # Field name made lowercase.
+    phoneno = models.TextField(db_column='PhoneNo', blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Users'
+
+class Userinrole(models.Model):
+    roleid = models.ForeignKey(Roles, models.DO_NOTHING, db_column='RoleId', primary_key=True)  # Field name made lowercase.
+    usersid = models.ForeignKey('Users', models.DO_NOTHING, db_column='UsersId')  # Field name made lowercase.
+    isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
+    regdate = models.CharField(db_column='RegDate', max_length=10, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'UserInRole'
+        unique_together = (('roleid', 'usersid'),)
 
 

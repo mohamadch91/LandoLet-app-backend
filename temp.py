@@ -208,6 +208,7 @@ class Propertytypes(models.Model):
         managed = False
         db_table = 'PropertyTypes'
 
+#added to data base
 
 class Roles(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
@@ -220,7 +221,7 @@ class Roles(models.Model):
         managed = False
         db_table = 'Roles'
 
-
+ 
 class Roompictures(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
@@ -256,7 +257,7 @@ class Rooms(models.Model):
         managed = False
         db_table = 'Rooms'
 
-
+#added to data base
 class Userinrole(models.Model):
     roleid = models.ForeignKey(Roles, models.DO_NOTHING, db_column='RoleId', primary_key=True)  # Field name made lowercase.
     usersid = models.ForeignKey('Users', models.DO_NOTHING, db_column='UsersId')  # Field name made lowercase.
@@ -268,7 +269,7 @@ class Userinrole(models.Model):
         db_table = 'UserInRole'
         unique_together = (('roleid', 'usersid'),)
 
-
+#added to data base
 class Users(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
