@@ -1,34 +1,78 @@
+
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from authen.models import User
+from authen.models import User, Roles, Userinrole
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Roles
+        fields = ['role_name','isactive']
+
+    def create(self, validated_data):
+        role = Roles.objects.create(**validated_data)
+        return role
 
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
-    @classmethod
-    def get_token(cls, user):
-        token = super(MyTokenObtainPairSerializer, cls).get_token(user)
-
-        # Add custom claims
-        token['username'] = user.username
-        return token
+ ## define the serializer class for Ueser model    
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('pk','phone','username', 'email', 'first_name', 'last_name', 'password', 'title','birth','address','city','zip')
+        fields = '__all__'
+
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
+    user=UserSerializer()
+    Role=RoleSerializer()   
+    class Meta:
+        model = Userinrole
+        fields = '__all__'
+        extra_kwargs = {'user': {'required': True}, 'role': {'required': True}}
+    def create(self, validated_data):
+        user = User.objects.create(validated_data['user'])
+        role = Roles.objects.create(role_name=validated_data['role']['role_name'],isactive=validated_data['role']['isactive'],regdate=validated_data['user']['regdate'])
+        userinrole = Userinrole.objects.create(userid=user.id,roleid=role,regdate=user.regdate,isactive=role.isactive)
+        return userinrole       
+
+# user update serilizer         
+class UpdateUserSerializer(serializers.ModelSerializer):
+    username=serializers.CharField(validators=[UniqueValidator(queryset=User.objects.all())])
     class Meta:
         model = User
-        fields = ('pk','phone','username', 'email', 'first_name', 'last_name', 'password', )
-        extra_kwargs = {'password': {'write_only': True}}
-    def create(self, validated_data):
-        user = User.objects.create_user(phone=validated_data['phone'],username= validated_data['username'],email= validated_data['email'],first_name= validated_data['first_name'],last_name= validated_data['last_name'],password= validated_data['password'])
-        return user        
+        fields = '__all__'
+        extra_kwargs = {
+            'first_name': {'required': True},
+            'last_name': {'required': True},
+        }
+
+    def validate_email(self, value):
+        user = self.context['request'].user
+        if User.objects.exclude(id=user.id).filter(email=value).exists():
+            raise serializers.ValidationError({"email": "This email is already in use."})
+        return value
+
+    def validate_username(self, value):
+        user = self.context['request'].user
+        if User.objects.exclude(id=user.id).filter(username=value).exists():
+            raise serializers.ValidationError({"username": "This username is already in use."})
+        return value
+    def validate_postal_code(self, value):
+        if not value.isdigit():
+            raise serializers.ValidationError("Postal code must be numeric.")
+        return value
+    def validate_phone_number(self, value):
+        if not value.isdigit():
+            raise serializers.ValidationError("Phone number must be numeric.")
+        return value        
+    
+    def update(self, instance, validated_data):
+        instance=super().update(instance, validated_data)
+        instance.save()
+        return instance    
+# user change password serializer
 class ChangePasswordSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
@@ -55,45 +99,5 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         instance.set_password(validated_data['password'])
         instance.save()
 
-        return instance        
-class UpdateUserSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(required=True)
-
-    class Meta:
-        model = User
-        fields = ('url','phone','username', 'email', 'first_name', 'last_name', 'password', 'title','birth','address','city','zip')
-        extra_kwargs = {
-            'first_name': {'required': True},
-            'last_name': {'required': True},
-        }
-
-    def validate_email(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(pk=user.pk).filter(email=value).exists():
-            raise serializers.ValidationError({"email": "This email is already in use."})
-        return value
-
-    def validate_username(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(pk=user.pk).filter(username=value).exists():
-            raise serializers.ValidationError({"username": "This phone is already in use."})
-        return value
-    def validate_phone(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(pk=user.pk).filter(phone=value).exists():
-            raise serializers.ValidationError({"username": "This username is already in use."})
-        return value
-    
-    def update(self, instance, validated_data):
-        instance.phone=validated_data['phone']
-        instance.birth=validated_data['birth']
-        instance.title=validated_data['title']
-        instance.city=validated_data['city']
-        instance.address=validated_data['address']
-        instance.zip=validated_data['zip']
-        instance.first_name = validated_data['first_name']
-        instance.last_name = validated_data['last_name']
-        instance.email = validated_data['email']
-        instance.username = validated_data['username']
-        instance.save()
-        return instance                
+        return instance      
+ 

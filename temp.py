@@ -296,3 +296,13 @@ class Efmigrationshistory(models.Model):
     class Meta:
         managed = False
         db_table = '__EFMigrationsHistory'
+ # "default": {
+    #     'ENGINE': 'sql_server.pyodbc',
+    #     "NAME": "LandoLet",
+    #     "USER": "sa",
+    #     "PASSWORD": "mohamaD1380@",
+    #     "HOST": "localhost",
+    #     "PORT": "1433",
+    #     "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
+    #     },
+    # },

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from .serializers import MyTokenObtainPairSerializer,ChangePasswordSerializer,UpdateUserSerializer
+from .serializers import ChangePasswordSerializer,UpdateUserSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 from authen.models import User
@@ -13,15 +13,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
-class MyObtainTokenPairView(TokenObtainPairView):
-    permission_classes = (AllowAny,)
-    serializer_class = MyTokenObtainPairSerializer
 
 
 class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
     permission_classes = (AllowAny,)
-    serializer_class = RegisterSerializer    
+    serializer_class = RegisterSerializer   
+
 class ChangePasswordView(generics.UpdateAPIView):
     
     queryset = User.objects.all()
