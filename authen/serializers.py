@@ -6,14 +6,6 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
 import json
-class RoleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Roles
-        fields = ['role_name','isactive']
-
-    def create(self, validated_data):
-        role = Roles.objects.create(**validated_data)
-        return role
 
 
 
@@ -21,28 +13,19 @@ class RoleSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id','is_active','username','password','firstname','lastname','phoneno','fulladdress','type','postalcode','regdate',]
+        fields = ['id','username','is_active','password','first_name','last_name','phone_no','full_address','role','postal_code','regdate',]
         extra_kwargs = {'password': {'write_only': True}}
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
-    usersid=UserSerializer()
-    roleid=RoleSerializer()   
+    
     class Meta:
-        model = Userinrole
-        fields = ['usersid','roleid']
-        extra_kwargs = {'usersid': {'required': True}, 'roleid': {'required': True}}
+        model = User
+        fields = ['id','username','is_active','password','first_name','last_name','phone_no','full_address','role','postal_code','regdate',]
+        extra_kwargs = {'password': {'write_only': True}}
     def create(self, validated_data):
-      
-        temp=json.dumps(validated_data['usersid'])
-        # print(temp)
-        usersid = User.objects.create_user(**validated_data['usersid'])
-        # usersid.save()
-        roleid = Roles.objects.create(role_name=validated_data['roleid']['role_name'],isactive=validated_data['roleid']['isactive'],regdate=validated_data['usersid']['regdate'])
-        # roleid.save()
-        userinrole = Userinrole.objects.create(usersid=usersid,roleid=roleid,regdate=usersid.regdate,isactive=roleid.isactive)
-        # print(userinrole.roleid.id)
-        return userinrole       
+        user = User.objects.create(**validated_data)
+        return user
 
 # user update serilizer         
 class UpdateUserSerializer(serializers.ModelSerializer):
@@ -87,10 +70,10 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('old_password', 'password', 'password2')
+        fields = ('old_password', 'password', 'confirm_password')
 
     def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
+        if attrs['password'] != attrs['confirm_password']:
             raise serializers.ValidationError({"password": "Password fields didn't match."})
 
         return attrs
