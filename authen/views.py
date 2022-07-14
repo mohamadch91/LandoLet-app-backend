@@ -5,7 +5,7 @@ from django.shortcuts import render
 # Create your views here.
 from .serializers import ChangePasswordSerializer,UpdateUserSerializer
 from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.views import TokenObtainPairView
+
 from authen.models import User
 from .serializers import RegisterSerializer
 from rest_framework import generics
@@ -20,32 +20,7 @@ from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, Ou
 class RegisterView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer   
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        res_user={
-            'id':user.usersid.id,
-            'isactive':user.usersid.is_active,
-            'username':user.usersid.username,
-            'password':user.usersid.password,
-            'firstname':user.usersid.firstname,
-            'lastname':user.usersid.lastname,
-            'phoneno':user.usersid.phoneno,
-            'fulladdress':user.usersid.fulladdress,
-            'type':user.usersid.type,
-            'postalcode':user.usersid.postalcode,
-            'regdate':user.usersid.regdate,
-            'rolename':user.roleid.role_name,
-            'isactive':user.roleid.isactive,
-            'roleid':user.roleid.id,
-        }
-        response_data = {
-            "user":res_user
-            
-        }
-        # print(serializer)
-        return Response(response_data, status=status.HTTP_201_CREATED)
+
 class ChangePasswordView(generics.UpdateAPIView):
     lookup_field = 'id'
     queryset = User.objects.all()
