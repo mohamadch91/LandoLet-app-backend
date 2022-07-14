@@ -1,3 +1,5 @@
+import json
+from urllib import response
 from django.shortcuts import render
 
 # Create your views here.
@@ -18,14 +20,39 @@ from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, Ou
 class RegisterView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer   
-
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        res_user={
+            'id':user.usersid.id,
+            'isactive':user.usersid.is_active,
+            'username':user.usersid.username,
+            'password':user.usersid.password,
+            'firstname':user.usersid.firstname,
+            'lastname':user.usersid.lastname,
+            'phoneno':user.usersid.phoneno,
+            'fulladdress':user.usersid.fulladdress,
+            'type':user.usersid.type,
+            'postalcode':user.usersid.postalcode,
+            'regdate':user.usersid.regdate,
+            'rolename':user.roleid.role_name,
+            'isactive':user.roleid.isactive,
+            'roleid':user.roleid.id,
+        }
+        response_data = {
+            "user":res_user
+            
+        }
+        # print(serializer)
+        return Response(response_data, status=status.HTTP_201_CREATED)
 class ChangePasswordView(generics.UpdateAPIView):
-    
+    lookup_field = 'id'
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
-    serializer_class = ChangePasswordSerializer   
+    serializer_class = ChangePasswordSerializer  
+     
 class UpdateProfileView(generics.UpdateAPIView):
-    
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = UpdateUserSerializer     

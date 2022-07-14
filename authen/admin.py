@@ -3,21 +3,19 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from authen.models import User,Userinrole,Roles
 # Register your models here.
-# @admin.register(User)
-# class UserAdmin(BaseUserAdmin):
-#     fieldsets = (
-#         (None, {'fields': ('username','phone','email', 'password')}),
-#         (_('Personal info'), {'fields': ('first_name', 'last_name','title','birth','address','city','zip')}),
-#         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
-#                                        'groups', 'user_permissions')}),
-#         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-#     )
-#     add_fieldsets = (
-#         (None, {
-#             'classes': ('wide',),
-#             'fields': ('phone','username','email', 'password1', 'password2'),
-#         }),
-#     )
-#     list_display = ('phone','email','username', 'first_name', 'last_name', 'is_staff')
-#     search_fields = ('phone','email', 'first_name', 'last_name')
-#     ordering = ('phone',)
+
+class CustomUserAdmin(BaseUserAdmin):
+    model = User
+    list_display = ('username', 'is_staff', 'is_active', 'is_superuser')
+    list_filter = ('username', 'is_staff', 'is_active',)
+    fieldsets = (
+        ('اطلاعات اصلی', {'fields': ('username', 'password', 'postalcode', 'firstname', 'lastname', 'phoneno')}),
+        ('Permissions', {
+         'fields': ('is_staff', 'is_active', 'user_permissions')}),
+    )
+    
+    search_fields = ('is_staff',)
+    ordering = ('username',)
+admin.site.register(User,CustomUserAdmin)        
+admin.site.register(Userinrole)
+admin.site.register(Roles)

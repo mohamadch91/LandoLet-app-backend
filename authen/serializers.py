@@ -5,6 +5,7 @@ from authen.models import User, Roles, Userinrole
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
+import json
 class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Roles
@@ -20,21 +21,27 @@ class RoleSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
-
+        fields = ['id','is_active','username','password','firstname','lastname','phoneno','fulladdress','type','postalcode','regdate',]
+        extra_kwargs = {'password': {'write_only': True}}
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
-    user=UserSerializer()
-    Role=RoleSerializer()   
+    usersid=UserSerializer()
+    roleid=RoleSerializer()   
     class Meta:
         model = Userinrole
-        fields = '__all__'
-        extra_kwargs = {'user': {'required': True}, 'role': {'required': True}}
+        fields = ['usersid','roleid']
+        extra_kwargs = {'usersid': {'required': True}, 'roleid': {'required': True}}
     def create(self, validated_data):
-        user = User.objects.create(validated_data['user'])
-        role = Roles.objects.create(role_name=validated_data['role']['role_name'],isactive=validated_data['role']['isactive'],regdate=validated_data['user']['regdate'])
-        userinrole = Userinrole.objects.create(userid=user.id,roleid=role,regdate=user.regdate,isactive=role.isactive)
+      
+        temp=json.dumps(validated_data['usersid'])
+        # print(temp)
+        usersid = User.objects.create_user(**validated_data['usersid'])
+        # usersid.save()
+        roleid = Roles.objects.create(role_name=validated_data['roleid']['role_name'],isactive=validated_data['roleid']['isactive'],regdate=validated_data['usersid']['regdate'])
+        # roleid.save()
+        userinrole = Userinrole.objects.create(usersid=usersid,roleid=roleid,regdate=usersid.regdate,isactive=roleid.isactive)
+        # print(userinrole.roleid.id)
         return userinrole       
 
 # user update serilizer         
