@@ -6,14 +6,14 @@ from authen.models import User
 
 class CustomUserAdmin(BaseUserAdmin):
     model = User
-    list_display = ('username', 'id', 'is_active', 'regdate','role','first_name','last_name','postal_code','full_address','phone_no')
-    list_filter = ('username', 'id', 'first_name','last_name','postal_code','full_address','phone_no','role')
+    list_display = ('email', 'id', 'is_active', 'regdate','role','first_name','last_name','postal_code','full_address','phone_no')
+    list_filter = ('email', 'id', 'first_name','last_name','postal_code','full_address','phone_no','role')
     fieldsets = (
-        ('infos', {'fields': ('username', 'password', 'postal_code', 'first_name', 'last_name', 'phone_no')}),
+        ('infos', {'fields': ('email', 'password', 'postal_code', 'first_name', 'last_name', 'phone_no')}),
         ('Permissions', {
          'fields': ('is_staff', 'is_active', 'user_permissions')}),
     )
     
-    search_fields = ('username','id','first_name','last_name','postal_code','full_address','phone_no','role')
-    ordering = ('username','id','first_name','last_name','postal_code','full_address','phone_no','role')
+    search_fields = ('email','id','first_name','last_name','postal_code','full_address','phone_no','role')
+    ordering = ('email','id','first_name','last_name','postal_code','full_address','phone_no','role')
 admin.site.register(User,CustomUserAdmin)        

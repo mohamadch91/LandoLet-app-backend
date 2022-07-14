@@ -1,7 +1,7 @@
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
-from authen.models import User, Roles, Userinrole
+from authen.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
@@ -13,7 +13,7 @@ import json
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id','username','is_active','password','first_name','last_name','phone_no','full_address','role','postal_code','regdate',]
+        fields = ['id','email','is_active','password','first_name','last_name','phone_no','full_address','role','postal_code','regdate',]
         extra_kwargs = {'password': {'write_only': True}}
 
 # Register Serializer
@@ -21,7 +21,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['id','username','is_active','password','first_name','last_name','phone_no','full_address','role','postal_code','regdate',]
+        fields = ['id','email','is_active','password','first_name','last_name','phone_no','full_address','role','postal_code','regdate',]
         extra_kwargs = {'password': {'write_only': True}}
     def create(self, validated_data):
         user = User.objects.create(**validated_data)
@@ -38,11 +38,11 @@ class UpdateUserSerializer(serializers.ModelSerializer):
             'last_name': {'required': True},
         }
 
-    def validate_email(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(id=user.id).filter(email=value).exists():
-            raise serializers.ValidationError({"email": "This email is already in use."})
-        return value
+    # def validate_email(self, value):
+    #     user = self.context['request'].user
+    #     if User.objects.exclude(id=user.id).filter(email=value).exists():
+    #         raise serializers.ValidationError({"email": "This email is already in use."})
+    #     return value
 
     def validate_username(self, value):
         user = self.context['request'].user

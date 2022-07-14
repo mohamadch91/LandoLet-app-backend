@@ -27,6 +27,10 @@ SECRET_KEY = 'django-insecure-m!s*e^%fm3f59%i4_z+3qw!%==f$d)lc&g(q0!dstw4)9&q!c9
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 SIMPLE_JWT = {
   'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
