@@ -46,16 +46,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
         return value
 
 
-    # def validate_postal_code(self, value):
-    #     if value is not None:
-    #         if not value.isdigit():
-    #             raise serializers.ValidationError("Postal code must be numeric.")
-    #         return value
-    # def validate_phone_no(self, value):
-    #     if value is not None:
-    #         if not value.isdigit():
-    #             raise serializers.ValidationError("Phone number must be numeric.")
-    #         return value        
+        
     
     def update(self, instance, validated_data):
         new_data={}

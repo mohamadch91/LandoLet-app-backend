@@ -1,9 +1,10 @@
 import json
+from os import stat
 from urllib import response
 from django.shortcuts import render
 
 # Create your views here.
-from .serializers import ChangePasswordSerializer,UpdateUserSerializer
+from .serializers import ChangePasswordSerializer,UpdateUserSerializer,UserSerializer
 from rest_framework.permissions import AllowAny
 
 from authen.models import User
@@ -63,3 +64,24 @@ class LogoutAllView(APIView):
             t, _ = BlacklistedToken.objects.get_or_create(token=token)
 
         return Response(status=status.HTTP_205_RESET_CONTENT)            
+class UserView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(data=serializer.data,status=status.HTTP_200_OK)
+class UserPersonal(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        res={
+            "first_name":serializer.data["first_name"],
+            "last_name":serializer.data["last_name"],
+            "email":serializer.data["email"],
+            "phone":serializer.data["phone_no"],
+            "postal_code":serializer.data["postal_code"],
+        }
+        return Response(data=serializer.data,status=status.HTTP_200_OK)
