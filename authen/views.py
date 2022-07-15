@@ -30,10 +30,17 @@ class ChangePasswordView(generics.UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = ChangePasswordSerializer  
-     
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response({"Password changed succesfully"}, status=status.HTTP_200_OK) 
+
 class UpdateProfileView(generics.UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
+    lookup_field = 'id'
     serializer_class = UpdateUserSerializer     
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)

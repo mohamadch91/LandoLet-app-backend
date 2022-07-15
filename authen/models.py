@@ -43,6 +43,7 @@ class User(AbstractUser):
     class Role(models.TextChoices):
         TENANT="Tenant"
         LANLORD="Landlord"    
+        AGENCY="Agency"
     username=None    
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     is_active = models.BooleanField(db_column='IsActive',default=True)  # Field name made lowercase.
