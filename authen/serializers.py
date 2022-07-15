@@ -7,7 +7,9 @@ from django.contrib.auth.password_validation import validate_password
 
 import json
 
-
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    username_field = User.EMAIL_FIELD
+   
 
  ## define the serializer class for Ueser model    
 class UserSerializer(serializers.ModelSerializer):
@@ -24,7 +26,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['id','email','is_active','password','first_name','last_name','phone_no','full_address','role','postal_code','regdate',]
         extra_kwargs = {'password': {'write_only': True}}
     def create(self, validated_data):
-        user = User.objects.create(**validated_data)
+        user = User.objects.create_user(**validated_data)
         return user
 
 # user update serilizer         

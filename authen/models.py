@@ -17,9 +17,9 @@ class CustomUserManager(BaseUserManager):
 
         # password=make_password(password)       
         # return self.create_user(username, password, **extra_fields)
-        user = self.model(email=email, password=password, **extra_fields)
+        user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password ,**extra_fields):
@@ -29,7 +29,7 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
-
+        
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
@@ -43,8 +43,7 @@ class User(AbstractUser):
     class Role(models.TextChoices):
         TENANT="Tenant"
         LANLORD="Landlord"    
-
-   
+    username=None    
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     is_active = models.BooleanField(db_column='IsActive',default=True)  # Field name made lowercase.
     regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
@@ -56,9 +55,11 @@ class User(AbstractUser):
     postal_code = models.IntegerField(db_column='PostalCode', blank=True, null=True)  # Field name made lowercase.
     full_address = models.TextField(db_column='FullAddress', blank=True, null=True)  # Field name made lowercase.
     phone_no = models.IntegerField(db_column='PhoneNo', blank=True, null=True)  # Field name made lowercase.
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
     class Meta:
         # managed = False
-        db_table = 'Users'
+        db_table = 'User'
     objects = CustomUserManager()
  
  

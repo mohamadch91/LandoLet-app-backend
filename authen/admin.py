@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from authen.models import User
 # Register your models here.
 
+@admin.register(User)
 class CustomUserAdmin(BaseUserAdmin):
     model = User
     list_display = ('email', 'id', 'is_active', 'regdate','role','first_name','last_name','postal_code','full_address','phone_no')
@@ -16,4 +17,4 @@ class CustomUserAdmin(BaseUserAdmin):
     
     search_fields = ('email','id','first_name','last_name','postal_code','full_address','phone_no','role')
     ordering = ('email','id','first_name','last_name','postal_code','full_address','phone_no','role')
-admin.site.register(User,CustomUserAdmin)        
+      
