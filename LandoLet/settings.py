@@ -92,7 +92,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-ROOT_URLCONF = 'Landlot.urls'
+ROOT_URLCONF = 'LandoLet.urls'
 
 TEMPLATES = [
     {
@@ -117,7 +117,7 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
         ('small_square_crop', 'crop__50x50')
     ]
 }
-WSGI_APPLICATION = 'Landlot.wsgi.application'
+WSGI_APPLICATION = 'LandoLet.wsgi.application'
 
 
 # Database
@@ -184,7 +184,7 @@ CORS_ALLOWED_ORIGINS = [
 #     'www.test-cors.org',
 # ]
 
-CORS_ALLOW_CREDENTIALS = True
+lo = True
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
