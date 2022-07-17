@@ -25,7 +25,7 @@ class propertySerilizer(serializers.ModelSerializer):
             }
         }
 
-class keySerilizerview(serializers.ModelSerializer):
+class keySerilizer(serializers.ModelSerializer):
     class Meta:
         model = Keys
         fields = '__all__'
@@ -35,7 +35,7 @@ class keySerilizerview(serializers.ModelSerializer):
                 'validators': [UniqueValidator(queryset=Keys.objects.all())]
             }
         }
-class propertyKeysSerializerview(serializers.ModelSerializer):
+class propertyKeysSerializer(serializers.ModelSerializer):
     class Meta:
         model = Propertykeys
         fields = '__all__'
@@ -43,5 +43,25 @@ class propertyKeysSerializerview(serializers.ModelSerializer):
         extra_kwargs = {
             'name': {
                 'validators': [UniqueValidator(queryset=Propertykeys.objects.all())]
+            }
+        }  
+class MeterTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Meterstypes
+        fields = '__all__'
+        read_only_fields = ('id',)
+        extra_kwargs = {
+            'name': {
+                'validators': [UniqueValidator(queryset=Meterstypes.objects.all())]
+            }
+        }              
+class MeterreadingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Meterreading
+        fields = '__all__'
+        read_only_fields = ('id',)
+        extra_kwargs = {
+            'name': {
+                'validators': [UniqueValidator(queryset=Meterreading.objects.all())]
             }
         }        

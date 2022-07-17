@@ -67,7 +67,7 @@ class Meterreading(models.Model):
     propertiesid = models.ForeignKey('Properties', models.DO_NOTHING, db_column='PropertiesId')  # Field name made lowercase.
     meterstypesid = models.ForeignKey('Meterstypes', models.DO_NOTHING, db_column='MetersTypesId')  # Field name made lowercase.
     metervalue = models.TextField(db_column='MeterValue', blank=True, null=True)  # Field name made lowercase.
-    pictureurl = models.TextField(db_column='PictureURL', blank=True, null=True)  # Field name made lowercase.
+    pictureurl=models.ImageField(upload_to='media/',db_column='PictureURL', blank=True,null=True)  # Field name made lowercase.
 
     class Meta:
         # managed = False
@@ -108,7 +108,7 @@ class Propertykeys(models.Model):
     regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
     propertiesid = models.ForeignKey(Properties, models.DO_NOTHING, db_column='PropertiesId')  # Field name made lowercase.
     keysid = models.ForeignKey(Keys, models.DO_NOTHING, db_column='KeysId')  # Field name made lowercase.
-    pictureurl = models.TextField(db_column='PictureURL', blank=True, null=True)  # Field name made lowercase.
+    pictureurl=models.ImageField(upload_to='media/',db_column='PictureURL', blank=True,null=True)  # Field name made lowercase.
 
     class Meta:
         # managed = False
@@ -120,7 +120,7 @@ class Propertytypes(models.Model):
     isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
     regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
     types = models.TextField(db_column='Types', blank=True, null=True)  # Field name made lowercase.
-    image=models.ImageField(upload_to='media/',db_column='Image'    , blank=True,null=True)
+    pictureurl=models.ImageField(upload_to='media/',db_column='PictureURL', blank=True,null=True)
     class Meta:
         # managed = False
         db_table = 'PropertyTypes'
