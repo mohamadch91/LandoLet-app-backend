@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *
+from .models import Furnitures, Furnituresinrooms,Furnituresinroomspictures,Keys,Meterreading,Properties,Roomtypes,Rooms,Meterstypes,Propertykeys,Roompictures,Propertytypes
 # Register your models here.
 admin.site.register(Furnitures)
 admin.site.register(Furnituresinrooms)

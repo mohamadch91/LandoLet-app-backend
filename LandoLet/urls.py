@@ -25,4 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('authen.urls')),
     path('', include(router.urls)),
+    path('props/', include('props.urls')),
 ]

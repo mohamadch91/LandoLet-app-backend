@@ -78,9 +78,10 @@ INSTALLED_APPS = [
     'versatileimagefield',
     'django_filters',
     'authen',
+   'props',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
-    'props',
+    
 ]
 
 MIDDLEWARE = [
