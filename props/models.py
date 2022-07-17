@@ -9,7 +9,7 @@ from django.db import models
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
+from django.conf import settings
 
 class Furnitures(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
@@ -90,9 +90,9 @@ class Properties(models.Model):
     isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
     regdate = models.CharField(db_column='RegDate', max_length=10, blank=True, null=True)  # Field name made lowercase.
     propertytypesid = models.ForeignKey('Propertytypes', models.DO_NOTHING, db_column='PropertyTypesId')  # Field name made lowercase.
-    usersownerid = models.ForeignKey('Users', models.DO_NOTHING, db_column='UsersOwnerId')  # Field name made lowercase.
-    userslandlordid = models.ForeignKey('Users', models.DO_NOTHING, db_column='UsersLandlordId')  # Field name made lowercase.
-    userstenantid = models.ForeignKey('Users', models.DO_NOTHING, db_column='UsersTenantId')  # Field name made lowercase.
+    usersownerid = models.ForeignKey(settings.AUTH_USER_MODEL, models.DO_NOTHING, db_column='UsersOwnerId',related_name='User_owner_id')  # Field name made lowercase.
+    userslandlordid = models.ForeignKey(settings.AUTH_USER_MODEL, models.DO_NOTHING, db_column='UsersLandlordId',related_name='User_landlord_id')  # Field name made lowercase.
+    userstenantid = models.ForeignKey(settings.AUTH_USER_MODEL, models.DO_NOTHING, db_column='UsersTenantId',related_name='User_tenant_id')  # Field name made lowercase.
     postalcode = models.TextField(db_column='PostalCode', blank=True, null=True)  # Field name made lowercase.
     fulladdress = models.TextField(db_column='FullAddress', blank=True, null=True)  # Field name made lowercase.
     condition = models.IntegerField(db_column='Condition')  # Field name made lowercase.
