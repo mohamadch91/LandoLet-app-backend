@@ -1,6 +1,9 @@
 from django.shortcuts import render
 
 # Create your views here.
+from django.shortcuts import render
+
+# Create your views here.
 import json
 from os import stat
 from urllib import response
@@ -16,25 +19,25 @@ from .serializers import *
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-class registerPropertyTypeview(generics.CreateAPIView):
 
+class registerRoomPictureview(generics.CreateAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = propertyTypeSerializer
-    def post(self, request):
+    serializer_class = RoomPictureSerializer
+    def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-class PropertyTypeView(generics.RetrieveUpdateDestroyAPIView):
+class RoomPictureView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (AllowAny,)
-    queryset = Propertytypes.objects.all()
-    serializer_class = propertyTypeSerializer
-    # lookup_field = 'id'
-    # lookup_field = 'id'
+    queryset = Roompictures.objects.all()
+    serializer_class = RoomPictureSerializer
+    lookup_field = 'id'
     def get(self, request, *args, **kwargs):
         id=request.query_params.get('id')
         if(id):
@@ -65,68 +68,20 @@ class PropertyTypeView(generics.RetrieveUpdateDestroyAPIView):
                 return Response(status=status.HTTP_204_NO_CONTENT)
            else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)       
-class  registerPropertyview(generics.CreateAPIView):
-
+class registerRoomTypesView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = propertySerilizer
-    def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)        
-class PropertyView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (AllowAny,)
-    queryset = Properties.objects.all()
-    serializer_class = propertySerilizer
-    # lookup_field = 'id'
-    # lookup_field = 'id'
-    def get(self, request, *args, **kwargs):
-        id=request.query_params.get('id')
-        if(id):
-            queryset = self.queryset.all().filter(id=id)
-            serializer = self.serializer_class(queryset, many=True)
-            return Response(serializer.data)
-        else:    
-            serializers = self.serializer_class(self.get_queryset(), many=True)
-            return Response(data=serializers.data,status=status.HTTP_200_OK)
-    def put(self, request, *args, **kwargs):
-        id=request.query_params.get('id')
-
-        if(id):
-            queryset=self.queryset.all().filter(id=id).first()
-            serializer = self.serializer_class(queryset, data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-    def delete(self, request, *args, **kwargs):
-           id=request.query_params.get('id')
-           if(id):
-                queryset=self.queryset.all().filter(id=id).first()
-                serializer = self.serializer_class(queryset, data=request.data)
-                serializer.is_valid(raise_exception=True)
-                queryset.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
-           else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)  
-class registerkeysview(generics.CreateAPIView):
-
-    permission_classes = (AllowAny,)
-    serializer_class = keySerilizer
-    def post(self, request):
+    serializer_class = RoomTypesSerializer
+    def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-class KeyView(generics.RetrieveUpdateDestroyAPIView):
+class RoomTypesView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (AllowAny,)
-    queryset = Keys.objects.all()
-    serializer_class = keySerilizer
+    queryset = Roomtypes.objects.all()
+    serializer_class = RoomTypesSerializer
     lookup_field = 'id'
-    # lookup_field = 'id'
     def get(self, request, *args, **kwargs):
         id=request.query_params.get('id')
         if(id):
@@ -156,23 +111,20 @@ class KeyView(generics.RetrieveUpdateDestroyAPIView):
                 queryset.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)     
-class registerPropertyKeysview(generics.CreateAPIView):
-
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+class registerRoomsView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = propertyKeysSerializer
-    def post(self, request):
+    serializer_class = RoomSerializer
+    def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-class PropertyKeysView(generics.RetrieveUpdateDestroyAPIView):
+class RooomView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (AllowAny,)
-    queryset = Propertykeys.objects.all()
-    serializer_class = propertyKeysSerializer
-    lookup_field = 'id'
-    # lookup_field = 'id'
+    queryset = Rooms.objects.all()
+    serializer_class = RoomSerializer
     def get(self, request, *args, **kwargs):
         id=request.query_params.get('id')
         if(id):
@@ -202,22 +154,22 @@ class PropertyKeysView(generics.RetrieveUpdateDestroyAPIView):
                 queryset.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)      
-class registerMeterTypesview(generics.CreateAPIView):
+                return Response(status=status.HTTP_400_BAD_REQUEST)       
 
+#furnitures
+class registerFurnitureView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = MeterTypeSerializer
-    def post(self, request):
+    serializer_class = FurnituresSerializer
+    def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)   
-class MeterTypeView(generics.RetrieveUpdateDestroyAPIView):
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+class Furnitureview(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (AllowAny,)
-    queryset = Meterstypes.objects.all()
-    serializer_class = MeterTypeSerializer
-    # lookup_field = 'id'
+    queryset = Furnitures.objects.all()
+    serializer_class = FurnituresSerializer
     def get(self, request, *args, **kwargs):
         id=request.query_params.get('id')
         if(id):
@@ -247,23 +199,22 @@ class MeterTypeView(generics.RetrieveUpdateDestroyAPIView):
                 queryset.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)                         
-class registerMeterReadingview(generics.CreateAPIView):
+                return Response(status=status.HTTP_400_BAD_REQUEST)       
 
+  #furnituures in room
+class registerFurnitureInRoomView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = MeterreadingSerializer
-    def post(self, request):
+    serializer_class = FurnituresInRoomsSerializer
+    def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)        
-class MeterReadingView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (AllowAny,)
-    queryset = Meterreading.objects.all()
-    serializer_class = MeterreadingSerializer
-    lookup_field = 'id'
-    # lookup_field = 'id'
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)      
+class FurnitureInRoomView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes=(AllowAny,)
+    queryset = Furnituresinrooms.objects.all()   
+    serializer_class = FurnituresInRoomsSerializer
     def get(self, request, *args, **kwargs):
         id=request.query_params.get('id')
         if(id):
@@ -293,4 +244,48 @@ class MeterReadingView(generics.RetrieveUpdateDestroyAPIView):
                 queryset.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)  
+                return Response(status=status.HTTP_400_BAD_REQUEST)       
+
+class registerFurnituresinroomspicturesView(generics.CreateAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = FurnituresInRoomsPictureSerializer
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)      
+class FurnitureinroomspicturesView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes=(AllowAny,)
+    queryset = Furnituresinroomspictures.objects.all()   
+    serializer_class = FurnituresInRoomsPictureSerializer
+    def get(self, request, *args, **kwargs):
+        id=request.query_params.get('id')
+        if(id):
+            queryset = self.queryset.all().filter(id=id)
+            serializer = self.serializer_class(queryset, many=True)
+            return Response(serializer.data)
+        else:    
+            serializers = self.serializer_class(self.get_queryset(), many=True)
+            return Response(data=serializers.data,status=status.HTTP_200_OK)
+    def put(self, request, *args, **kwargs):
+        id=request.query_params.get('id')
+
+        if(id):
+            queryset=self.queryset.all().filter(id=id).first()
+            serializer = self.serializer_class(queryset, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, *args, **kwargs):
+           id=request.query_params.get('id')
+           if(id):
+                queryset=self.queryset.all().filter(id=id).first()
+                serializer = self.serializer_class(queryset, data=request.data)
+                serializer.is_valid(raise_exception=True)
+                queryset.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+           else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)

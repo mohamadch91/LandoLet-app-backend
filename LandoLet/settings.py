@@ -64,7 +64,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'django_filters',
     'authen',
    'props',
+   'rooms',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     

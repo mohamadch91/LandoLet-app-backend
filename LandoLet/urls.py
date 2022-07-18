@@ -26,4 +26,5 @@ urlpatterns = [
     path('auth/', include('authen.urls')),
     path('', include(router.urls)),
     path('props/', include('props.urls')),
+    path('rooms/', include('rooms.urls')),
 ]
