@@ -1,4 +1,5 @@
 from django.db import models
+from tomlkit import comment
 from props.models import Properties
 # Create your models here.
 
@@ -9,7 +10,7 @@ class Roompictures(models.Model):
     regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
     roomsid = models.ForeignKey('Rooms', models.DO_NOTHING, db_column='RoomsId')  # Field name made lowercase.
     url = models.ImageField(db_column='URL', blank=True, null=True)  # Field name made lowercase.
-
+    comment = models.TextField(db_column='Comment', blank=True, null=True)  # Field name made lowercase.
     class Meta:
         # managed = False
         db_table = 'RoomPictures'
@@ -20,7 +21,7 @@ class Roomtypes(models.Model):
     isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
     regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
     types = models.TextField(db_column='Types', blank=True, null=True)  # Field name made lowercase.
-
+    pictureurl=models.ImageField(upload_to='media/',db_column='PictureURL', blank=True,null=True) 
     class Meta:
         # managed = False
         db_table = 'RoomTypes'
