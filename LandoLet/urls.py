@@ -27,4 +27,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('props/', include('props.urls')),
     path('rooms/', include('rooms.urls')),
+    path('getprops/', include('getprops.urls')),
 ]

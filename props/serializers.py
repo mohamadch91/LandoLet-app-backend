@@ -1,3 +1,4 @@
+from pyrsistent import field
 from rest_framework import serializers
 from .models import *
 from rest_framework.validators import UniqueValidator
@@ -45,6 +46,7 @@ class propertyKeysSerializer(serializers.ModelSerializer):
                 'validators': [UniqueValidator(queryset=Propertykeys.objects.all())]
             }
         }  
+
 class MeterTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meterstypes
@@ -54,7 +56,8 @@ class MeterTypeSerializer(serializers.ModelSerializer):
             'name': {
                 'validators': [UniqueValidator(queryset=Meterstypes.objects.all())]
             }
-        }              
+        }
+
 class MeterreadingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Meterreading
@@ -63,5 +66,15 @@ class MeterreadingSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'name': {
                 'validators': [UniqueValidator(queryset=Meterreading.objects.all())]
+            }
+        }        
+class PropertyStatusSerilizer(serializers.ModelSerializer):
+    class Meta:
+        model = PropertyStatus
+        fields = '__all__'
+        read_only_fields = ('id',)
+        extra_kwargs = {
+            'name': {
+                'validators': [UniqueValidator(queryset=PropertyStatus.objects.all())]
             }
         }        

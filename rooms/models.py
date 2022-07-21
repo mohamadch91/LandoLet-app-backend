@@ -1,6 +1,7 @@
 from django.db import models
 from tomlkit import comment
 from props.models import Properties
+from django.conf import settings
 # Create your models here.
 
 
@@ -40,11 +41,12 @@ class Rooms(models.Model):
         db_table = 'Rooms'
 class Furnitures(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
+    isactive = models.BooleanField(db_column='IsActive', blank=True, null=True)  # Field name made lowercase.
     regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
     roomtypesid = models.ForeignKey('Roomtypes', models.CASCADE, db_column='RoomTypesId')  # Field name made lowercase.
     furniture = models.TextField(db_column='Furniture', blank=True, null=True)  # Field name made lowercase.
     is_default = models.BooleanField(db_column='IsDefault',blank=True ,null=True)
+    user_id=models.ForeignKey(settings.AUTH_USER_MODEL ,db_column='userId',on_delete= models.CASCADE,blank=True,null=True)
 
     class Meta:
         # managed = False
