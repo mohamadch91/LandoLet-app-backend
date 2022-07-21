@@ -68,7 +68,9 @@ class propertydetail(generics.ListAPIView):
             return Response("this user cannot acces property",status=status.HTTP_403_FORBIDDEN)
         meter_reading=Meterreading.objects.all().filter(propertiesid=prop_id)
         property_key=Propertykeys.objects.all().filter(propertiesid=prop_id)
-        meter_type=Meterstypes.objects.all()
+        queryset=Meterstypes.objects.all().filter(user_id=request.user)
+        q1=Meterstypes.objects.all().filter(is_default=True)
+        meter_type=q1|queryset
         keys=Keys.objects.all()
         meters=[]
         for e in meter_reading:
@@ -95,7 +97,10 @@ class propertydetail(generics.ListAPIView):
         room_types=Roomtypes.objects.all()
         room_pictures=Roompictures.objects.all()
         fur_in_room=Furnituresinrooms.objects.all()
-        fur=Furnitures.objects.all()
+        queryset=Furnitures.objects.all().filter(user_id=request.user)
+        q1=Furnitures.objects.all().filter(is_default=True)
+        fur=q1|queryset
+
         fur_in_room_pictures=Furnituresinroomspictures.objects.all()
         room_ans=[]
         for room in rooms:

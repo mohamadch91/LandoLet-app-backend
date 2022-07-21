@@ -13,7 +13,7 @@ urlpatterns = [
     path('room_add/', registerRoomsView.as_view(), name='Room add'),
     path('room/', RooomView.as_view(), name='Room'),
     
-    path('furtniture_add/',registerFurnitureView.as_view(), name='Furniture add'),
+    path('furniture_add/',registerFurnitureView.as_view(), name='Furniture add'),
     path('furniture/',Furnitureview.as_view(), name='Furniture'),
 
     path('finroom_add/', registerFurnitureInRoomView.as_view(), name='Furniture in room add'),

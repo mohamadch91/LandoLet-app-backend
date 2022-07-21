@@ -178,8 +178,13 @@ class Furnitureview(generics.RetrieveUpdateDestroyAPIView):
             serializer = self.serializer_class(queryset, many=True)
             return Response(serializer.data)
         else:    
-            serializers = self.serializer_class(self.get_queryset(), many=True)
-            return Response(data=serializers.data,status=status.HTTP_200_OK)
+           
+            queryset=self.queryset.all().filter(user_id=request.user)
+            q1=self.queryset.filter(is_default=True)
+            x=FurnituresSerializer(q1,many=True)
+            y=FurnituresSerializer(queryset,many=True)
+            z=x.data+y.data
+            return Response(data=z,status=status.HTTP_200_OK)
     def put(self, request, *args, **kwargs):
         id=request.query_params.get('id')
 
