@@ -85,3 +85,14 @@ class UserPersonal(APIView):
             "postal_code":serializer.data["postal_code"],
         }
         return Response(data=serializer.data,status=status.HTTP_200_OK)
+class checkEmailView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request):
+        email = request.query_params.get('email')
+        if(email==None):
+              return Response("need email query param",status=status.HTTP_400_BAD_REQUEST)
+        if User.objects.filter(email=email).exists():
+            return Response('this email already exist',status=status.HTTP_406_NOT_ACCEPTABLE)
+        else:
+            return Response('email is ok',status=status.HTTP_200_OK)
