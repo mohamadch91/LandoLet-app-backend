@@ -46,8 +46,10 @@ class User(AbstractUser):
         AGENCY="Agency"
     username=None    
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    is_active = models.BooleanField(db_column='IsActive',default=True)  # Field name made lowercase.
-    regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
+   # Field name made lowercase.
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+ # Field name made lowercase.
     role=models.CharField(db_column='RoleName',max_length=10,choices=Role.choices, null=True)
     # username = models.TextField(db_column='Username', blank=True, null=True)  # Field name made lowercase.
     first_name = models.TextField(db_column='FirstName', blank=True, null=True)  # Field name made lowercase.

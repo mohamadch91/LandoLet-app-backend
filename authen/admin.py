@@ -7,7 +7,7 @@ from authen.models import User
 @admin.register(User)
 class CustomUserAdmin(BaseUserAdmin):
     model = User
-    list_display = ('email', 'id', 'is_active', 'regdate','role','first_name','last_name','postal_code','full_address','phone_no')
+    list_display = ('email', 'id', 'is_active', 'created_at','role','first_name','last_name','postal_code','full_address','phone_no')
     list_filter = ('email', 'id', 'first_name','last_name','postal_code','full_address','phone_no','role')
     fieldsets = (
         ('infos', {'fields': ('email', 'password', 'postal_code', 'first_name', 'last_name', 'phone_no')}),

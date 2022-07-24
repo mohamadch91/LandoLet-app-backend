@@ -20,10 +20,10 @@ class propsview(generics.ListAPIView):
         props=props.filter(usersownerid=request.user.id)
         all_rooms=Rooms.objects.all()
         room_types=Roomtypes.objects.all()
-        status=PropertyStatus.objects.all()
+        statuss=PropertyStatus.objects.all()
         for e in props:
             rooms=all_rooms.filter(propertiesid=e.id)
-            stat=status.filter(property_id=e.id)
+            stat=statuss.filter(property_id=e.id)
             stat=PropertyStatusSerilizer(stat,many=True)
             proptype=Propertytypes.objects.all().filter(id=e.propertytypesid.id)
             propertytype = propertyTypeSerializer(proptype,many=True)

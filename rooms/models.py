@@ -1,5 +1,4 @@
 from django.db import models
-from tomlkit import comment
 from props.models import Properties
 from django.conf import settings
 # Create your models here.
@@ -7,8 +6,9 @@ from django.conf import settings
 
 class Roompictures(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
-    regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
+      # Field name made lowercase.
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     roomsid = models.ForeignKey('Rooms', models.CASCADE, db_column='RoomsId')  # Field name made lowercase.
     url = models.ImageField(db_column='URL', blank=True, null=True)  # Field name made lowercase.
     comment = models.TextField(db_column='Comment', blank=True, null=True)  # Field name made lowercase.
@@ -19,8 +19,9 @@ class Roompictures(models.Model):
 
 class Roomtypes(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
-    regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
+      # Field name made lowercase.
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     types = models.TextField(db_column='Types', blank=True, null=True)  # Field name made lowercase.
     pictureurl=models.ImageField(upload_to='media/',db_column='PictureURL', blank=True,null=True) 
     class Meta:
@@ -30,8 +31,9 @@ class Roomtypes(models.Model):
 
 class Rooms(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
-    regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
+      # Field name made lowercase.
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     roomtypesid = models.ForeignKey(Roomtypes, models.CASCADE, db_column='RoomTypesId')  # Field name made lowercase.
     propertiesid = models.ForeignKey(Properties, models.CASCADE, db_column='PropertiesId')  # Field name made lowercase.
     roomtitle = models.TextField(db_column='RoomTitle', blank=True, null=True)  # Field name made lowercase.
@@ -42,7 +44,8 @@ class Rooms(models.Model):
 class Furnitures(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     isactive = models.BooleanField(db_column='IsActive', blank=True, null=True)  # Field name made lowercase.
-    regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     roomtypesid = models.ForeignKey('Roomtypes', models.CASCADE, db_column='RoomTypesId')  # Field name made lowercase.
     furniture = models.TextField(db_column='Furniture', blank=True, null=True)  # Field name made lowercase.
     is_default = models.BooleanField(db_column='IsDefault',blank=True ,null=True)
@@ -55,8 +58,9 @@ class Furnitures(models.Model):
 
 class Furnituresinrooms(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
-    regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
+      # Field name made lowercase.
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     furnituresid = models.ForeignKey(Furnitures, models.CASCADE, db_column='FurnituresId')  # Field name made lowercase.
     roomsid = models.ForeignKey('Rooms', models.CASCADE, db_column='RoomsId')  # Field name made lowercase.
     quantity = models.IntegerField(db_column='Quantity')  # Field name made lowercase.
@@ -69,8 +73,9 @@ class Furnituresinrooms(models.Model):
 
 class Furnituresinroomspictures(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    isactive = models.BooleanField(db_column='IsActive')  # Field name made lowercase.
-    regdate = models.DateField(db_column='RegDate', blank=True, null=True)  # Field name made lowercase.
+      # Field name made lowercase.
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     furnituresinroomsid = models.ForeignKey(Furnituresinrooms, models.CASCADE, db_column='FurnituresInRoomsId')  # Field name made lowercase.
     url = models.ImageField(db_column='URL', blank=True, null=True)  # Field name made lowercase.
 

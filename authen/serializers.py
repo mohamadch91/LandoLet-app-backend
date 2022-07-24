@@ -15,7 +15,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id','email','is_active','password','first_name','last_name','phone_no','full_address','role','postal_code','regdate',]
+        fields = ['id','email','password','first_name','last_name','phone_no','full_address','role','postal_code','created_at','updated_at']
         extra_kwargs = {'password': {'write_only': True}}
 
 # Register Serializer
@@ -23,7 +23,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['id','email','is_active','password','first_name','last_name','phone_no','full_address','role','postal_code','regdate',]
+        fields = ['id','email','password','first_name','last_name','phone_no','full_address','role','postal_code','created_at','updated_at']
         extra_kwargs = {'password': {'write_only': True}}
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
@@ -33,7 +33,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','email','is_active','first_name','last_name','phone_no','full_address','role','postal_code','regdate')
+        fields = ('id','email','first_name','last_name','phone_no','full_address','role','postal_code','created_at','updated_at')
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True},
