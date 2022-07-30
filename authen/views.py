@@ -77,13 +77,7 @@ class UserPersonal(APIView):
     def get(self, request):
         user = request.user
         serializer = UserSerializer(user)
-        res={
-            "first_name":serializer.data["first_name"],
-            "last_name":serializer.data["last_name"],
-            "email":serializer.data["email"],
-            "phone":serializer.data["phone_no"],
-            "postal_code":serializer.data["postal_code"],
-        }
+
         return Response(data=serializer.data,status=status.HTTP_200_OK)
 class checkEmailView(APIView):
     permission_classes = (AllowAny,)
