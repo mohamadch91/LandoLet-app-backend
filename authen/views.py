@@ -4,7 +4,7 @@ from urllib import response
 from django.shortcuts import render
 
 # Create your views here.
-from .serializers import ChangePasswordSerializer,UpdateUserSerializer,UserSerializer
+from .serializers import ChangePasswordSerializer,UpdateUserSerializer,UserSerializer,LogoutSerializer
 from rest_framework.permissions import AllowAny
 
 from authen.models import User
@@ -44,16 +44,16 @@ class UpdateProfileView(generics.UpdateAPIView):
     lookup_field = 'id'
     serializer_class = UpdateUserSerializer     
 class LogoutView(APIView):
+
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         try:
-            refresh_token = request.data["refresh_token"]
-            token = RefreshToken(refresh_token)
+            refresh_token = self.request.data.get('refresh_token')
+            token = RefreshToken(token=refresh_token)
             token.blacklist()
-
             return Response(status=status.HTTP_205_RESET_CONTENT)
-        except Exception as e:
+        except:
             return Response(status=status.HTTP_400_BAD_REQUEST)    
 class LogoutAllView(APIView):
     permission_classes = (IsAuthenticated,)

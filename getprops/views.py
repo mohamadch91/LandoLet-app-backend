@@ -51,7 +51,7 @@ class propsview(generics.ListAPIView):
              
 
 
-        return Response(data=res,status=status.HTTP_204_NO_CONTENT)
+        return Response(data=res,status=status.HTTP_200_OK)
 
 class propertydetail(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)

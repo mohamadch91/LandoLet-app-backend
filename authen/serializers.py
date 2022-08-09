@@ -4,6 +4,8 @@ from rest_framework import serializers
 from authen.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+from rest_framework.response import Response
 
 import json
 
@@ -83,3 +85,22 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         instance.set_password(validated_data['password'])
         instance.save()
         return instance      
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField(error_messages = {"bad_token": "Token is expired or invalid"})
+    error_messages = {"bad_token": "Token is expired or invalid"}
+    default_error_message = {
+        'bad_token': ('Token is expired or invalid')
+    }
+
+    def validate(self, attrs):
+        self.token = attrs['refresh']
+        return attrs
+
+    def save(self, **kwargs):
+
+        try:
+            RefreshToken(self.token).blacklist()
+
+        except TokenError:
+            print("hi")
+            return Response("hi") 
