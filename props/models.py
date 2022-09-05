@@ -62,9 +62,9 @@ class Properties(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     propertytypesid = models.ForeignKey('Propertytypes', models.CASCADE, db_column='PropertyTypesId')  # Field name made lowercase.
-    usersownerid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersOwnerId',related_name='User_owner_id')  # Field name made lowercase.
-    userslandlordid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersLandlordId',related_name='User_landlord_id')  # Field name made lowercase.
-    userstenantid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersTenantId',related_name='User_tenant_id')  # Field name made lowercase.
+    usersownerid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersOwnerId',related_name='User_owner_id',blank=True,null=True)  # Field name made lowercase.
+    userslandlordid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersLandlordId',related_name='User_landlord_id',blank=True,null=True)  # Field name made lowercase.
+    userstenantid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersTenantId',related_name='User_tenant_id',blank=True,null=True)  # Field name made lowercase.
     postalcode = models.TextField(db_column='PostalCode', blank=True, null=True)  # Field name made lowercase.
     fulladdress = models.TextField(db_column='FullAddress', blank=True, null=True)  # Field name made lowercase.
     condition = models.IntegerField(db_column='Condition')  # Field name made lowercase.
