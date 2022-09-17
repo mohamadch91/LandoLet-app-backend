@@ -8,7 +8,7 @@ from .serializers import ChangePasswordSerializer,UpdateUserSerializer,UserSeria
 from rest_framework.permissions import AllowAny
 
 from authen.models import User
-from .serializers import RegisterSerializer,MyTokenObtainPairSerializer
+from .serializers import *
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -24,8 +24,26 @@ class MyObtainTokenPairView(TokenObtainPairView):
 
 class RegisterView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = RegisterSerializer   
+    serializer_class = RegisterSerializer
+    def post(self,request):
+        serializer = self.serializer_class(data=request.data)
+        if(serializer.is_valid()):
+            serializer.save()
+            user=User.objects.get(email=request.data['email'])
+            refresh = RefreshToken.for_user(user)
 
+            ser= ObtainTokenSerializer({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+                'created':True
+            }).data
+            final_data={
+                'user':UserSerializer(user).data,
+                'token':ser
+            }
+            return Response(final_data, status=status.HTTP_201_CREATED)
+
+        return Response({'message':serializer.errors},status=status.HTTP_400_BAD_REQUEST)
 class ChangePasswordView(generics.UpdateAPIView):
     lookup_field = 'id'
     queryset = User.objects.all()

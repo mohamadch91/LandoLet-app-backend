@@ -35,7 +35,7 @@ class Meterreading(models.Model):
     propertiesid = models.ForeignKey('Properties', models.CASCADE, db_column='PropertiesId')  # Field name made lowercase.
     meterstypesid = models.ForeignKey('Meterstypes', models.CASCADE, db_column='MetersTypesId')  # Field name made lowercase.
     metervalue = models.TextField(db_column='MeterValue', blank=True, null=True)  # Field name made lowercase.
-    pictureurl=models.ImageField(upload_to='media/',db_column='PictureURL', blank=True,null=True)  # Field name made lowercase.
+    pictureurl=models.ImageField(upload_to='props/',db_column='PictureURL', blank=True,null=True)  # Field name made lowercase.
 
     class Meta:
         # managed = False
@@ -81,7 +81,7 @@ class Propertykeys(models.Model):
     updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     propertiesid = models.ForeignKey(Properties, models.CASCADE, db_column='PropertiesId')  # Field name made lowercase.
     keysid = models.ForeignKey(Keys, models.CASCADE, db_column='KeysId')  # Field name made lowercase.
-    pictureurl=models.ImageField(upload_to='media/',db_column='PictureURL', blank=True,null=True)  # Field name made lowercase.
+    pictureurl=models.ImageField(upload_to='props/',db_column='PictureURL', blank=True,null=True)  # Field name made lowercase.
 
     class Meta:
         # managed = False
@@ -94,7 +94,7 @@ class Propertytypes(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     types = models.TextField(db_column='Types', blank=True, null=True)  # Field name made lowercase.
-    pictureurl=models.ImageField(upload_to='media/',db_column='PictureURL', blank=True,null=True)
+    pictureurl=models.ImageField(upload_to='props/',db_column='PictureURL', blank=True,null=True)
     class Meta:
         # managed = False
         db_table = 'PropertyTypes'

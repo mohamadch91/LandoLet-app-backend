@@ -1,0 +1,20 @@
+same as last register but result is this now
+ {
+    "user": {
+        "id": 6,
+        "email": "asdadchoupan58@yahoo.com",
+        "first_name": "sd",
+        "last_name": "sdfs",
+        "phone_no": null,
+        "full_address": "darya stret no234",
+        "role": "Tenant",
+        "postal_code": null,
+        "created_at": "2022-09-14T06:28:51.101977Z",
+        "updated_at": "2022-09-14T06:28:51.101997Z"
+    },
+    "token": {
+        "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYzMjIzMzMxLCJpYXQiOjE2NjMxMzY5MzEsImp0aSI6Ijg5NTQwZjFhOTc1NDQ0YjliMWZhOWM0ZmE1ZWQzZTA5IiwidXNlcl9pZCI6Nn0.ts-Ow8j25jF7VlVmNJShOmnbc_Ft-_KnDRA8V70QLd4",
+        "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2MzMwOTczMSwiaWF0IjoxNjYzMTM2OTMxLCJqdGkiOiJmZDdhMjQ4OWY4ZjQ0ZDQ3OTg3NzIxMzg0NWFlNWMwZiIsInVzZXJfaWQiOjZ9.e8utzLbndFIUkuzgGJ-21MTJIbVN-V7QGE1GeB1tIbk",
+        "created": true
+    }
+}

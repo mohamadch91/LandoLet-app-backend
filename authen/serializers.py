@@ -104,3 +104,8 @@ class LogoutSerializer(serializers.Serializer):
         except TokenError:
             print("hi")
             return Response("hi") 
+class ObtainTokenSerializer(serializers.Serializer):
+    access = serializers.CharField( allow_null=False)
+    refresh = serializers.CharField( allow_null=False)
+    created = serializers.BooleanField()
+
