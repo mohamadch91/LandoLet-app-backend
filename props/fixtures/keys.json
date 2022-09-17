@@ -1,14 +1,52 @@
 [
   {
-    "model": "props.ItemClass",
+    "model": "props.Keys",
     "pk": 1,
     "fields": {
       "id": 1,
-      "title": "Cold chain – Active equipment",
-      "code": "ACC",
-      "active": true,
+      "type": "Front Door",
       "created_at": "2014-10-01T00:00:00",
       "updated_at": "2014-10-01T00:00:00"
     }
-  }
+  },
+    {
+      "model": "props.Keys",
+      "pk": 2,
+      "fields": {
+        "id": 2,
+        "type": "Back Door",
+        "created_at": "2014-10-01T00:00:00",
+        "updated_at": "2014-10-01T00:00:00"
+      }
+    },
+      {
+        "model": "props.Keys",
+        "pk": 3,
+        "fields": {
+          "id": 3,
+          "type": "Shed/ Garage Door",
+          "created_at": "2014-10-01T00:00:00",
+          "updated_at": "2014-10-01T00:00:00"
+        }
+      },
+        {
+          "model": "props.Keys",
+          "pk": 4,
+          "fields": {
+            "id": 4,
+            "type": "Windows",
+            "created_at": "2014-10-01T00:00:00",
+            "updated_at": "2014-10-01T00:00:00"
+          }
+        },
+          {
+            "model": "props.Keys",
+            "pk": 5,
+            "fields": {
+              "id": 5,
+              "type": "Other",
+              "created_at": "2014-10-01T00:00:00",
+              "updated_at": "2014-10-01T00:00:00"
+            }
+          }
 ]
