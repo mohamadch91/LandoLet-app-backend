@@ -1,0 +1,52 @@
+[
+  {
+    "model": "props.Keys",
+    "pk": 1,
+    "fields": {
+      "id": 1,
+      "types": "Front Door",
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "props.Keys",
+    "pk": 2,
+    "fields": {
+      "id": 2,
+      "types": "Back Door",
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "props.Keys",
+    "pk": 3,
+    "fields": {
+      "id": 3,
+      "types": "Shed/ Garage Door",
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "props.Keys",
+    "pk": 4,
+    "fields": {
+      "id": 4,
+      "types": "Windows",
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "props.Keys",
+    "pk": 5,
+    "fields": {
+      "id": 5,
+      "types": "Other",
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  }
+]

@@ -139,15 +139,16 @@ class KeyView(generics.RetrieveUpdateDestroyAPIView):
             return Response(data=serializers.data,status=status.HTTP_200_OK)
     def put(self, request, *args, **kwargs):
         id=request.query_params.get('id')
-
-        if(id):
+        if(id is not None):
             queryset=self.queryset.all().filter(id=id).first()
             serializer = self.serializer_class(queryset, data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
+            if(serializer.is_valid()):
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"need query params"},status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request, *args, **kwargs):
            id=request.query_params.get('id')
            if(id):
