@@ -60,12 +60,16 @@ class propertydetail(generics.ListAPIView):
         prop_id=request.query_params.get('p_id')
         prop=self.queryset.filter(id=prop_id)
         if(prop_id==None):
-              return Response("need property id query param",status=status.HTTP_400_BAD_REQUEST)
+              return Response({"message":"need property id query param"},status=status.HTTP_400_BAD_REQUEST)
         if(len(prop)==0):
-            return Response("invalid property id",status=status.HTTP_404_NOT_FOUND)
+            return Response({
+    "message": "property not found"
+},status=status.HTTP_404_NOT_FOUND)
         ser=propertySerilizer(prop,many=True)
         if(ser.data[0]["usersownerid"]!=request.user.id):
-            return Response("this user cannot acces property",status=status.HTTP_403_FORBIDDEN)
+            return Response({
+    "message": "you are not owner of this property"
+},status=status.HTTP_403_FORBIDDEN)
         meter_reading=Meterreading.objects.all().filter(propertiesid=prop_id)
         property_key=Propertykeys.objects.all().filter(propertiesid=prop_id)
         queryset=Meterstypes.objects.all().filter(user_id=request.user)

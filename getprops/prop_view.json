@@ -1,0 +1,110 @@
+for property view on main page
+you can use this URL 
+http://127.0.0.1:8000/getprops/propsview/
+each user can view his own properties
+METHOD: GET
+PARAMS:NONE
+RESPONSE: JSON
+[
+    {
+        "property": {
+            "data": {
+                "id": 1,
+                "created_at": "2022-09-18T00:02:23.325471Z",
+                "updated_at": "2022-09-18T00:02:23.325514Z",
+                "postalcode": "1466234578",
+                "fulladdress": "Tehran,Tehran Iran",
+                "condition": 2,
+                "propertytypesid": 1,
+                "usersownerid": 1,
+                "userslandlordid": null,
+                "userstenantid": null
+            },
+            "rooms": [],
+            "status": [],
+            "propertytype": [
+                {
+                    "id": 1,
+                    "created_at": "2014-10-01T00:00:00Z",
+                    "updated_at": "2014-10-01T00:00:00Z",
+                    "types": "Detached House"
+                }
+            ]
+        }
+    },
+    {
+        "property": {
+            "data": {
+                "id": 2,
+                "created_at": "2022-09-18T00:04:34.741526Z",
+                "updated_at": "2022-09-18T00:04:34.741567Z",
+                "postalcode": "154545",
+                "fulladdress": "Tehran,Tehran iran",
+                "condition": 2,
+                "propertytypesid": 2,
+                "usersownerid": 1,
+                "userslandlordid": 3,
+                "userstenantid": null
+            },
+            "rooms": [],
+            "status": [],
+            "propertytype": [
+                {
+                    "id": 2,
+                    "created_at": "2014-10-01T00:00:00Z",
+                    "updated_at": "2022-09-17T23:46:23.511761Z",
+                    "types": "Semi-Detached House"
+                }
+            ]
+        }
+    }
+]
+
+
+
+for property view if user click on property
+you can use this URL
+http://127.0.0.1:8000/getprops/propertydetail/?p_id=1
+METHOD: GET
+PARAMS: p_id
+
+if property is not exist return 404 with this message
+{
+    "message": "property not found"
+}
+
+if user is not owner of property return 403 with this message
+{
+    "message": "you are not owner of this property"
+}
+else:
+
+RESPONSE :
+
+
+
+{
+    "property": {
+        "data": [
+            {
+                "id": 1,
+                "created_at": "2022-09-18T00:02:23.325471Z",
+                "updated_at": "2022-09-18T00:02:23.325514Z",
+                "postalcode": "1466234578",
+                "fulladdress": "Tehran,Tehran Iran",
+                "condition": 2,
+                "propertytypesid": 1,
+                "usersownerid": 1,
+                "userslandlordid": null,
+                "userstenantid": null
+            }
+        ],
+        "rooms": [],
+        "meters": [],
+        "propertykeys": []
+    }
+}
+
+room type and rooms and meters and propertykeys are empty because we dont have any data for them 
+but you can add data for them and test it
+i will add data for them in next version and send you help file for it

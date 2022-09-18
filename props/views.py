@@ -97,7 +97,7 @@ class PropertyView(generics.RetrieveUpdateDestroyAPIView):
     def put(self, request, *args, **kwargs):
         id=request.query_params.get('id')
 
-        if(id):
+        if(id is not None):
             queryset=self.queryset.all().filter(id=id).first()
             serializer = self.serializer_class(queryset, data=request.data)
             serializer.is_valid(raise_exception=True)
@@ -107,12 +107,13 @@ class PropertyView(generics.RetrieveUpdateDestroyAPIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request, *args, **kwargs):
            id=request.query_params.get('id')
-           if(id):
-                queryset=self.queryset.all().filter(id=id).first()
-                serializer = self.serializer_class(queryset, data=request.data)
-                serializer.is_valid(raise_exception=True)
-                queryset.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
+           if(id is not None):
+                obj=get_object_or_404(Properties,id=id)
+                obj.delete()
+                return Response({
+    "message": "Property deleted successfully"
+}
+,status=status.HTTP_204_NO_CONTENT)
            else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)  
 class registerkeysview(generics.CreateAPIView):
@@ -172,42 +173,36 @@ class registerPropertyKeysview(generics.CreateAPIView):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-class PropertyKeysView(generics.RetrieveUpdateDestroyAPIView):
+class PropertyKeysView(APIView):
     permission_classes = (IsAuthenticated,)
-    queryset = Propertykeys.objects.all()
-    serializer_class = propertyKeysSerializer
-    lookup_field = 'id'
     # lookup_field = 'id'
-    def get(self, request, *args, **kwargs):
-        id=request.query_params.get('id')
-        if(id):
-            queryset = self.queryset.all().filter(id=id)
-            serializer = self.serializer_class(queryset, many=True)
-            return Response(serializer.data)
-        else:    
-            serializers = self.serializer_class(self.get_queryset(), many=True)
-            return Response(data=serializers.data,status=status.HTTP_200_OK)
-    def put(self, request, *args, **kwargs):
-        id=request.query_params.get('id')
-
-        if(id):
-            queryset=self.queryset.all().filter(id=id).first()
-            serializer = self.serializer_class(queryset, data=request.data)
+    def post (self,request):
+        ans=[]
+        p_key=Propertykeys.objects.all().delete()
+        for i in request.data['keys']:
+            data={
+                "propertiesid":request.data['propertyid'],
+                "keysid":i["keyid"],
+                "count":i["count"]
+            }
+            serializer = propertyKeysSerializer(data=data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
+            ans.append(serializer.data)
+        return Response(ans,status=status.HTTP_201_CREATED)
+    def get(self, request, *args, **kwargs):
+        id=request.query_params.get('id')
+        if(id is not None):
+            queryset = Propertykeys.objects.filter(propertiesid=id)
+            serializer = propertyKeysSerializer(queryset, many=True)
             return Response(serializer.data)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-    def delete(self, request, *args, **kwargs):
-           id=request.query_params.get('id')
-           if(id):
-                queryset=self.queryset.all().filter(id=id).first()
-                serializer = self.serializer_class(queryset, data=request.data)
-                serializer.is_valid(raise_exception=True)
-                queryset.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
-           else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)      
+            
+        else:    
+            queryset = Propertykeys.objects.all()
+            serializer = propertyKeysSerializer(queryset, many=True)
+            return Response(serializer.data)
+            
+    
 class registerMeterTypesview(APIView):
     permission_classes = (IsAuthenticated,)
     # serializer_class=MeterTypeSerializer
