@@ -20,6 +20,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+import copy
 class registerPropertyTypeview(generics.CreateAPIView):
 
     permission_classes = (IsAuthenticated,)
@@ -71,11 +72,13 @@ class  registerPropertyview(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = propertySerilizer
     def post(self, request):
-        serializer = self.get_serializer(data=request.data)
+        new_data=copy.deepcopy(request.data)
+        new_data['usersownerid']=request.user.id
+        serializer = self.get_serializer(data=new_data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)        
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 class PropertyView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Properties.objects.all()
