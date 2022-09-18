@@ -58,15 +58,12 @@ class propertydetail(generics.ListAPIView):
     queryset = Properties.objects.all()
     def get(self, request, format=None):
         prop_id=request.query_params.get('p_id')
-        prop=self.queryset.filter(id=prop_id)
+        prop=get_object_or_404(Properties,id=prop_id)
         if(prop_id==None):
               return Response({"message":"need property id query param"},status=status.HTTP_400_BAD_REQUEST)
-        if(len(prop)==0):
-            return Response({
-    "message": "property not found"
-},status=status.HTTP_404_NOT_FOUND)
-        ser=propertySerilizer(prop,many=True)
-        if(ser.data[0]["usersownerid"]!=request.user.id):
+
+        ser=propertySerilizer(prop,many=False)
+        if(ser.data["usersownerid"]!=request.user.id):
             return Response({
     "message": "you are not owner of this property"
 },status=status.HTTP_403_FORBIDDEN)
