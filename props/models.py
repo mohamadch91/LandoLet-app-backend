@@ -35,7 +35,7 @@ class Meterreading(models.Model):
     propertiesid = models.ForeignKey('Properties', models.CASCADE, db_column='PropertiesId')  # Field name made lowercase.
     meterstypesid = models.ForeignKey('Meterstypes', models.CASCADE, db_column='MetersTypesId')  # Field name made lowercase.
     metervalue = models.TextField(db_column='MeterValue', blank=True, null=True)  # Field name made lowercase.
-    pictureurl=models.ImageField(upload_to='props/',db_column='PictureURL', blank=True,null=True)  # Field name made lowercase.
+    pictureurl=models.ImageField(upload_to='props/meters/',db_column='PictureURL', blank=True,null=True)  # Field name made lowercase.
 
     class Meta:
         # managed = False

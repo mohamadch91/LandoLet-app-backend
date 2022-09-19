@@ -10,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from authen.models import User
 from django.shortcuts import get_object_or_404
 class propsview(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
@@ -142,3 +143,24 @@ class propertydetail(generics.ListAPIView):
         }
         return Response(data=final_ans,status=status.HTTP_200_OK)    
 
+class sendtoTenantView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self, request, format=None):
+        prop_id=request.data["p_id"]
+
+        prop=get_object_or_404(Properties,id=prop_id)
+        if(prop_id==None):
+              return Response({"message":"need property id in request"},status=status.HTTP_400_BAD_REQUEST)
+        if( prop.usersownerid.id!=request.user.id):
+            return Response({
+    "message": "you are not owner of this property"
+},status=status.HTTP_403_FORBIDDEN)
+        tenant_id=request.data["t_email"]
+        tenant=get_object_or_404(User,email=tenant_id)
+        if(tenant_id==None):
+              return Response({"message":"need tenant id in request"},status=status.HTTP_400_BAD_REQUEST)
+        prop.userstenantid=tenant
+        prop.save()
+        return Response({
+    "message": "property sent to tenant"
+},status=status.HTTP_200_OK)

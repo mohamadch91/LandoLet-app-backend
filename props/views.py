@@ -112,10 +112,12 @@ class PropertyView(generics.RetrieveUpdateDestroyAPIView):
                 obj.delete()
                 return Response({
     "message": "Property deleted successfully"
-}
+    }   
 ,status=status.HTTP_204_NO_CONTENT)
            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)  
+                return Response({
+    "message": "need query param"
+    },status=status.HTTP_400_BAD_REQUEST)  
 class registerkeysview(generics.CreateAPIView):
 
     permission_classes = (IsAuthenticated,)
@@ -207,11 +209,17 @@ class registerMeterTypesview(APIView):
     permission_classes = (IsAuthenticated,)
     # serializer_class=MeterTypeSerializer
     def post(self, request):
-        serializer = MeterTypeSerializer(data=request.data)
+        new_data=copy.deepcopy(request.data)
+        data={
+            "meters":new_data['meters'],
+            "is_default":False,
+            "user_id":request.user.id
+        }
+
+        serializer = MeterTypeSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        x=Meterstypes.objects.create(user_id=request.user,isactive=request.data['isactive'],regdate=request.data['regdate'],is_default=request.data['is_default'],meters=request.data['meters'])
-        ser=MeterTypeSerializer(x)
-        return Response(ser.data, status=status.HTTP_201_CREATED)   
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class MeterTypeView(generics.RetrieveUpdateDestroyAPIView):
@@ -228,7 +236,7 @@ class MeterTypeView(generics.RetrieveUpdateDestroyAPIView):
 
         else:    
             
-            queryset=self.queryset.all().filter(user_id=request.user)
+            queryset=self.queryset.filter(user_id=request.user.id)
             q1=self.queryset.filter(is_default=True)
             x=MeterTypeSerializer(q1,many=True)
             y=MeterTypeSerializer(queryset,many=True)
@@ -238,9 +246,17 @@ class MeterTypeView(generics.RetrieveUpdateDestroyAPIView):
     def put(self, request, *args, **kwargs):
         id=request.query_params.get('id')
 
-        if(id):
+        if(id is not None):
+            if(int(id)<4):
+                return Response({"message":"you can't update default meter types"},status=status.HTTP_400_BAD_REQUEST)
+            
             queryset=self.queryset.all().filter(id=id).first()
-            serializer = self.serializer_class(queryset, data=request.data)
+            data={
+            "meters":request.data['meters'],
+            "is_default":False,
+            "user_id":request.user.id
+             }
+            serializer = self.serializer_class(queryset, data=data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
@@ -273,18 +289,17 @@ class MeterReadingView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     # lookup_field = 'id'
     def get(self, request, *args, **kwargs):
-        id=request.query_params.get('id')
+        id=request.query_params.get('p_id')
         if(id):
-            queryset = self.queryset.all().filter(id=id)
-            serializer = self.serializer_class(queryset, many=True)
-            return Response(serializer.data)
+            meters=Meterreading.objects.filter(propertiesid=id)
+            ser=MeterreadingSerializer(meters,many=True)
+            return Response(ser.data)
         else:    
-            serializers = self.serializer_class(self.get_queryset(), many=True)
-            return Response(data=serializers.data,status=status.HTTP_200_OK)
+            return Response({"message":"need query param"},status=status.HTTP_200_OK)
     def put(self, request, *args, **kwargs):
         id=request.query_params.get('id')
 
-        if(id):
+        if(id is not None):
             queryset=self.queryset.all().filter(id=id).first()
             serializer = self.serializer_class(queryset, data=request.data)
             serializer.is_valid(raise_exception=True)
@@ -294,11 +309,9 @@ class MeterReadingView(generics.RetrieveUpdateDestroyAPIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request, *args, **kwargs):
            id=request.query_params.get('id')
-           if(id):
-                queryset=self.queryset.all().filter(id=id).first()
-                serializer = self.serializer_class(queryset, data=request.data)
-                serializer.is_valid(raise_exception=True)
-                queryset.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
+           if(id is not None):
+                x=get_object_or_404(Meterreading,id=id)
+                x.delete()
+                return Response({"message":"Delete succesfully"},status=status.HTTP_204_NO_CONTENT)
            else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)  

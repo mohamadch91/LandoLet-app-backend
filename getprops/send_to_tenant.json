@@ -1,0 +1,10 @@
+for send to tenant
+http://127.0.0.1:8000/getprops/send_to_tenant/
+
+METHOD: POST
+REQUEST BODY:
+  {
+    "p_id": 1,
+    "t_email": "a@b.com"
+    
+}

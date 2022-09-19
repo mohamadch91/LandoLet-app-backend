@@ -1,3 +1,4 @@
+from itertools import count
 from django.db import models
 from props.models import Properties
 from django.conf import settings
@@ -23,7 +24,6 @@ class Roomtypes(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     types = models.TextField(db_column='Types', blank=True, null=True)  # Field name made lowercase.
-    pictureurl=models.ImageField(upload_to='media/',db_column='PictureURL', blank=True,null=True) 
     class Meta:
         # managed = False
         db_table = 'RoomTypes'

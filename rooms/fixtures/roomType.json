@@ -1,0 +1,82 @@
+[
+  {
+    "model": "rooms.Roomtypes",
+    "pk": 1,
+    "fields": {
+      "id": 1,
+      "types": "Bedroom",
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "rooms.Roomtypes",
+    "pk": 2,
+    "fields": {
+      "id": 2,
+      "types": "Bathroom",
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "rooms.Roomtypes",
+    "pk": 3,
+    "fields": {
+      "id": 3,
+      "types": "Kitchen",
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "rooms.Roomtypes",
+    "pk": 4,
+    "fields": {
+      "id": 4,
+      "types": "Dining Room",
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "rooms.Roomtypes",
+    "pk": 5,
+    "fields": {
+      "id": 5,
+      "types": "Lounge",
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "rooms.Roomtypes",
+    "pk": 6,
+    "fields": {
+      "id": 6,
+      "types": "Entrance Hall",
+       "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "rooms.Roomtypes",
+    "pk": 7,
+    "fields": {
+      "id": 7,
+      "types": "Stairs/Landing",
+       "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "rooms.Roomtypes",
+    "pk": 8,
+    "fields": {
+      "id": 8,
+      "types": "Porch",
+       "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  }
+]
