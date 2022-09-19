@@ -84,7 +84,7 @@ class RoomTypesView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'id'
     def get(self, request, *args, **kwargs):
         id=request.query_params.get('id')
-        if(id):
+        if(id is not None):
             queryset = self.queryset.all().filter(id=id)
             serializer = self.serializer_class(queryset, many=True)
             return Response(serializer.data)
@@ -93,9 +93,8 @@ class RoomTypesView(generics.RetrieveUpdateDestroyAPIView):
             return Response(data=serializers.data,status=status.HTTP_200_OK)
     def put(self, request, *args, **kwargs):
         id=request.query_params.get('id')
-
-        if(id):
-            queryset=self.queryset.all().filter(id=id).first()
+        if(id is not None):
+            queryset=get_object_or_404(Roomtypes,id=id)
             serializer = self.serializer_class(queryset, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
@@ -104,14 +103,14 @@ class RoomTypesView(generics.RetrieveUpdateDestroyAPIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request, *args, **kwargs):
            id=request.query_params.get('id')
-           if(id):
-                queryset=self.queryset.all().filter(id=id).first()
+           if(id is not None):
+                queryset=get_object_or_404(Roomtypes,id=id)
                 serializer = self.serializer_class(queryset, data=request.data)
                 serializer.is_valid(raise_exception=True)
                 queryset.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
+                return Response({"message" :"delete succsessfully"},status=status.HTTP_204_NO_CONTENT)
            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
+                return Response({"message" :"need query param"},status=status.HTTP_400_BAD_REQUEST)
 class registerRoomsView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = RoomSerializer
