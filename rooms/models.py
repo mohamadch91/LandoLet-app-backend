@@ -63,7 +63,6 @@ class Furnituresinrooms(models.Model):
     updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     furnituresid = models.ForeignKey(Furnitures, models.CASCADE, db_column='FurnituresId',blank=True ,null=True)  # Field name made lowercase.
     roomsid = models.ForeignKey('Rooms', models.CASCADE, db_column='RoomsId',blank=True ,null=True)  # Field name made lowercase.
-    count=models.IntegerField(db_column='Count',blank=True,null=True)
     quantity = models.IntegerField(db_column='Quantity')  # Field name made lowercase.
     comment=models.TextField(db_column="Comment",blank=True ,null=True)
 
