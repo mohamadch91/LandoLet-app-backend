@@ -105,8 +105,7 @@ class RoomTypesView(generics.RetrieveUpdateDestroyAPIView):
            id=request.query_params.get('id')
            if(id is not None):
                 queryset=get_object_or_404(Roomtypes,id=id)
-                serializer = self.serializer_class(queryset, data=request.data)
-                serializer.is_valid(raise_exception=True)
+               
                 queryset.delete()
                 return Response({"message" :"delete succsessfully"},status=status.HTTP_204_NO_CONTENT)
            else:
@@ -147,8 +146,7 @@ class RooomView(generics.RetrieveUpdateDestroyAPIView):
            id=request.query_params.get('id')
            if(id is not None):
                 queryset=get_object_or_404(Rooms,id=id) 
-                serializer = self.serializer_class(queryset, data=request.data)
-                serializer.is_valid(raise_exception=True)
+               
                 queryset.delete()
                 return Response({"messsage": "Delete succsessfully"},status=status.HTTP_204_NO_CONTENT)
            else:
@@ -194,7 +192,7 @@ class Furnitureview(generics.RetrieveUpdateDestroyAPIView):
         if(id is not None):
             if(int(id)<16):
                 return Response({"message" :"can not update default furniture"},status=status.HTTP_400_BAD_REQUEST)
-            queryset=self.queryset.all().filter(id=id).first()
+            queryset=get_object_or_404(Furnitures,id=id)
             serializer = self.serializer_class(queryset, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
@@ -206,9 +204,8 @@ class Furnitureview(generics.RetrieveUpdateDestroyAPIView):
            if(id is not None):
                 if(int(id)<16):
                     return Response({"message" :"can not delete default furniture"},status=status.HTTP_400_BAD_REQUEST)
-                queryset=self.queryset.all().filter(id=id).first()
-                serializer = self.serializer_class(queryset, data=request.data)
-                serializer.is_valid(raise_exception=True)
+                queryset=get_object_or_404(Furnitures,id=id)
+               
                 queryset.delete()
                 return Response({"message" :"delete succsessfully"},status=status.HTTP_204_NO_CONTENT)
            else:
@@ -247,7 +244,7 @@ class FurnitureInRoomView(generics.RetrieveUpdateDestroyAPIView):
         id=request.query_params.get('id')
 
         if(id is not None):
-            queryset=self.queryset.all().filter(id=id).first()
+            queryset=get_object_or_404(Furnituresinrooms,id=id)
             serializer = self.serializer_class(queryset, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
@@ -257,9 +254,7 @@ class FurnitureInRoomView(generics.RetrieveUpdateDestroyAPIView):
     def delete(self, request, *args, **kwargs):
            id=request.query_params.get('id')
            if(id is not None):
-                queryset=self.queryset.all().filter(id=id).first()
-                serializer = self.serializer_class(queryset, data=request.data)
-                serializer.is_valid(raise_exception=True)
+                queryset=get_object_or_404(Furnituresinrooms,id=id)
                 queryset.delete()
                 return Response({"message" :"delete succsessfully"},status=status.HTTP_204_NO_CONTENT)
            else:
@@ -279,32 +274,35 @@ class FurnitureinroomspicturesView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Furnituresinroomspictures.objects.all()   
     serializer_class = FurnituresInRoomsPictureSerializer
     def get(self, request, *args, **kwargs):
-        id=request.query_params.get('id')
-        if(id):
-            queryset = self.queryset.all().filter(id=id)
+        f_id=request.query_params.get('f_id')
+        r_id=request.query_params.get('r_id')
+        if(f_id is not None and r_id is not None):
+            return Response({"message" :"can not have both query param"},status=status.HTTP_400_BAD_REQUEST)
+        if(f_id is not None):
+            queryset = self.queryset.filter(furnituresinroomsid=f_id)
             serializer = self.serializer_class(queryset, many=True)
             return Response(serializer.data)
-        else:    
-            serializers = self.serializer_class(self.get_queryset(), many=True)
-            return Response(data=serializers.data,status=status.HTTP_200_OK)
+        if(r_id is not None):
+            queryset = self.queryset.filter(furnituresinroomsid__roomsid=r_id)
+            serializer = self.serializer_class(queryset, many=True)
+            return Response(serializer.data)
     def put(self, request, *args, **kwargs):
         id=request.query_params.get('id')
 
-        if(id):
-            queryset=self.queryset.all().filter(id=id).first()
+        if(id is not None):
+            queryset=get_object_or_404(Furnituresinroomspictures,id=id)
             serializer = self.serializer_class(queryset, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message" :"need query param"},status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request, *args, **kwargs):
            id=request.query_params.get('id')
-           if(id):
-                queryset=self.queryset.all().filter(id=id).first()
-                serializer = self.serializer_class(queryset, data=request.data)
-                serializer.is_valid(raise_exception=True)
+           if(id is not None):
+                queryset=get_object_or_404(Furnituresinroomspictures,id=id)
+              
                 queryset.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
+                return Response({"message" :"delete succsessfully"},status=status.HTTP_204_NO_CONTENT)
            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
+                return Response({"message" :"need query param"},status=status.HTTP_400_BAD_REQUEST)    
