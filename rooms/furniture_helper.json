@@ -1,0 +1,125 @@
+
+cause we don't know Furniture in each room
+i added a few things to the list
+i think we should have a list of furniture in each room
+but you can test this i will edit later
+for now we have 15 constant furniture by Default 
+you can see the list here
+
+http://127.0.0.1:8000/rooms/furniture/?r_id=1
+
+METHOD: GET
+PARAMS: r_id
+PARAM DESCRIPTION: room id
+RESPONSE: JSON
+RESPONSE DESCRIPTION: list of furniture in the room default and user added
+
+RESPONSE :
+
+
+[
+    {
+        "id": 1,
+        "isactive": true,
+        "created_at": "2014-10-01T00:00:00Z",
+        "updated_at": "2014-10-01T00:00:00Z",
+        "furniture": "Bed",
+        "is_default": true,
+        "roomtypesid": 1,
+        "user_id": null
+    },
+    {
+        "id": 2,
+        "isactive": true,
+        "created_at": "2014-10-01T00:00:00Z",
+        "updated_at": "2014-10-01T00:00:00Z",
+        "furniture": "Table",
+        "is_default": true,
+        "roomtypesid": 1,
+        "user_id": null
+    },
+    {
+        "id": 3,
+        "isactive": true,
+        "created_at": "2014-10-01T00:00:00Z",
+        "updated_at": "2014-10-01T00:00:00Z",
+        "furniture": "Mirror",
+        "is_default": true,
+        "roomtypesid": 1,
+        "user_id": null
+    },
+    {
+        "id": 4,
+        "isactive": true,
+        "created_at": "2014-10-01T00:00:00Z",
+        "updated_at": "2014-10-01T00:00:00Z",
+        "furniture": "Drawer",
+        "is_default": true,
+        "roomtypesid": 1,
+        "user_id": null
+    }
+]
+
+if you want to add a new furniture to the room you can use this method
+
+
+http://127.0.0.1:8000/rooms/furniture_add/
+METHOD: POST
+PARAMS: None
+PARAM DESCRIPTION: None
+
+REQUEST BODY: JSON
+REQUEST BODY DESCRIPTION: add new furniture to the room
+
+REQUEST BODY :
+    
+    {
+        "furniture": "Chair",
+        "roomtypesid": 1,
+        "user_id": 1
+    }
+
+    for edit furniture you can use this method
+
+    http://127.0.0.1:8000/rooms/furniture/?id=14
+
+    if you try to edit a default furniture it will return an error
+
+{
+    "message": "can not update default furniture"
+}
+
+METHOD: PUT
+PARAMS: id
+PARAM DESCRIPTION: furniture id
+REQUEST BODY: JSON
+REQUEST BODY DESCRIPTION: edit furniture
+BODY :
+
+{
+        "furniture": "Chair2",
+        "roomtypesid": 1,
+        "user_id": 1
+    }
+
+    for delete furniture you can use this method
+http://127.0.0.1:8000/rooms/furniture/?id=16
+
+if you try to delete a default furniture it will return an error
+
+{
+    "message": "can not delete default furniture"
+}
+
+METHOD: DELETE
+PARAMS: id
+PARAM DESCRIPTION: furniture id
+RESPONSE: JSON
+RESPONSE DESCRIPTION: delete furniture
+
+RESPONSE :
+
+{
+    "message": "delete succsessfully"
+}
+

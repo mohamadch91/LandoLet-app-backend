@@ -1,0 +1,179 @@
+[
+  {
+    "model": "rooms.Furnitures",
+    "pk": 1,
+    "fields": {
+      "id": 1,
+      "furniture": "Bed",
+      "is_default": true,
+      "roomtypesid":1,
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "rooms.Furnitures",
+    "pk": 2,
+    "fields": {
+      "id": 2,
+      "is_default": true,
+      "roomtypesid": 1,
+      "furniture": "Table",
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+  {
+    "model": "rooms.Furnitures",
+    "pk": 3,
+    "fields": {
+      "id": 3,
+      "furniture": "Mirror",
+      "is_default": true,
+      "roomtypesid": 1,
+      "created_at": "2014-10-01T00:00:00",
+      "updated_at": "2014-10-01T00:00:00"
+    }
+  },
+   {
+     "model": "rooms.Furnitures",
+     "pk": 4,
+     "fields": {
+       "id": 4,
+       "furniture": "Drawer",
+       "is_default": true,
+       "roomtypesid": 1,
+       "created_at": "2014-10-01T00:00:00",
+       "updated_at": "2014-10-01T00:00:00"
+     }
+   },  {
+     "model": "rooms.Furnitures",
+     "pk": 5,
+     "fields": {
+       "id": 5,
+       "furniture": "Closet",
+       "is_default": true,
+       "roomtypesid": 2,
+       "created_at": "2014-10-01T00:00:00",
+       "updated_at": "2014-10-01T00:00:00"
+     }
+   },  {
+     "model": "rooms.Furnitures",
+     "pk": 6,
+     "fields": {
+       "id": 6,
+       "furniture": "Van",
+       "is_default": true,
+       "roomtypesid": 2,
+       "created_at": "2014-10-01T00:00:00",
+       "updated_at": "2014-10-01T00:00:00"
+     }
+   },  {
+     "model": "rooms.Furnitures",
+     "pk": 7,
+     "fields": {
+       "id": 7,
+       "furniture": "Table",
+       "is_default": true,
+       "roomtypesid": 2,
+       "created_at": "2014-10-01T00:00:00",
+       "updated_at": "2014-10-01T00:00:00"
+     }
+   },
+   {
+     "model": "rooms.Furnitures",
+     "pk": 8,
+     "fields": {
+       "id": 8,
+       "furniture": "Oven",
+       "is_default": true,
+       "roomtypesid": 3,
+       "created_at": "2014-10-01T00:00:00",
+       "updated_at": "2014-10-01T00:00:00"
+     }
+   },
+   {
+     "model": "rooms.Furnitures",
+     "pk": 9,
+     "fields": {
+       "id": 9,
+       "furniture": "Oven1",
+       "is_default": true,
+       "roomtypesid": 3,
+       "created_at": "2014-10-01T00:00:00",
+       "updated_at": "2014-10-01T00:00:00"
+     }
+   },
+   {
+     "model": "rooms.Furnitures",
+     "pk": 10,
+     "fields": {
+       "id": 10,
+       "furniture": "Oven2",
+       "is_default": true,
+       "roomtypesid": 3,
+       "created_at": "2014-10-01T00:00:00",
+       "updated_at": "2014-10-01T00:00:00"
+     }
+   },
+   {
+     "model": "rooms.Furnitures",
+     "pk": 11,
+     "fields": {
+       "id": 11,
+       "furniture": "Oven3",
+       "is_default": true,
+       "roomtypesid": 4,
+       "created_at": "2014-10-01T00:00:00",
+       "updated_at": "2014-10-01T00:00:00"
+     }
+   },
+   {
+     "model": "rooms.Furnitures",
+     "pk": 12,
+     "fields": {
+       "id": 12,
+       "furniture": "Oven4",
+       "is_default": true,
+       "roomtypesid": 5,
+       "created_at": "2014-10-01T00:00:00",
+       "updated_at": "2014-10-01T00:00:00"
+     }
+   },
+   {
+     "model": "rooms.Furnitures",
+     "pk": 13,
+     "fields": {
+       "id": 13,
+       "furniture": "Oven5",
+       "is_default": true,
+       "roomtypesid": 6,
+       "created_at": "2014-10-01T00:00:00",
+       "updated_at": "2014-10-01T00:00:00"
+     }
+   },
+      {
+        "model": "rooms.Furnitures",
+        "pk": 14,
+        "fields": {
+          "id": 14,
+          "furniture": "Oven6",
+          "is_default": true,
+          "roomtypesid": 7,
+          "created_at": "2014-10-01T00:00:00",
+          "updated_at": "2014-10-01T00:00:00"
+        }
+      },
+         {
+           "model": "rooms.Furnitures",
+           "pk": 15,
+           "fields": {
+             "id": 15,
+             "furniture": "Oven7",
+             "is_default": true,
+             "roomtypesid": 6,
+             "created_at": "2014-10-01T00:00:00",
+             "updated_at": "2014-10-01T00:00:00"
+           }
+         }
+]
