@@ -218,20 +218,26 @@ class Furnitureview(generics.RetrieveUpdateDestroyAPIView):
 class registerFurnitureInRoomView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = FurnituresInRoomsSerializer
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)      
+    def post(self, request):
+        room=get_object_or_404(Rooms,id=request.data['roomsid'])
+        furniture=get_object_or_404(Furnitures,id=request.data['furnituresid'])
+        if(room.roomtypesid.id!=furniture.roomtypesid.id):
+            return Response({"message" :"room and furniture are not match"},status=status.HTTP_400_BAD_REQUEST)
+        ser=FurnituresInRoomsSerializer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data,status=status.HTTP_201_CREATED)
+        else:
+            return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
+        
 class FurnitureInRoomView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes=(IsAuthenticated,)
     queryset = Furnituresinrooms.objects.all()   
     serializer_class = FurnituresInRoomsSerializer
     def get(self, request, *args, **kwargs):
-        id=request.query_params.get('id')
-        if(id):
-            queryset = self.queryset.all().filter(id=id)
+        id=request.query_params.get('r_id')
+        if(id is not None):
+            queryset = self.queryset.filter(roomsid=id)
             serializer = self.serializer_class(queryset, many=True)
             return Response(serializer.data)
         else:    
@@ -240,24 +246,24 @@ class FurnitureInRoomView(generics.RetrieveUpdateDestroyAPIView):
     def put(self, request, *args, **kwargs):
         id=request.query_params.get('id')
 
-        if(id):
+        if(id is not None):
             queryset=self.queryset.all().filter(id=id).first()
             serializer = self.serializer_class(queryset, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message" :"need query param"},status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request, *args, **kwargs):
            id=request.query_params.get('id')
-           if(id):
+           if(id is not None):
                 queryset=self.queryset.all().filter(id=id).first()
                 serializer = self.serializer_class(queryset, data=request.data)
                 serializer.is_valid(raise_exception=True)
                 queryset.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
+                return Response({"message" :"delete succsessfully"},status=status.HTTP_204_NO_CONTENT)
            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)       
+                return Response({"message" :"need query param"},status=status.HTTP_400_BAD_REQUEST)       
 
 class registerFurnituresinroomspicturesView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)

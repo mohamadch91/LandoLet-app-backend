@@ -77,7 +77,7 @@ class Furnituresinroomspictures(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     furnituresinroomsid = models.ForeignKey(Furnituresinrooms, models.CASCADE, db_column='FurnituresInRoomsId')  # Field name made lowercase.
-    url = models.ImageField(db_column='URL', blank=True, null=True)  # Field name made lowercase.
+    image = models.ImageField(db_column='URL', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         # managed = False

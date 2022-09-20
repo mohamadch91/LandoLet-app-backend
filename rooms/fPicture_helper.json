@@ -1,0 +1,5 @@
+for add picture for furniture in one room
+http://127.0.0.1:8000/rooms/finroomP_add/
+METHOD: POST
+REQUEST : FORM DATA
+
