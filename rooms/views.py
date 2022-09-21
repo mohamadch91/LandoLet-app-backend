@@ -39,9 +39,9 @@ class RoomPictureView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RoomPictureSerializer
     lookup_field = 'id'
     def get(self, request, *args, **kwargs):
-        id=request.query_params.get('id')
-        if(id):
-            queryset = self.queryset.all().filter(id=id)
+        id=request.query_params.get('r_id')
+        if(id is not None):
+            queryset = self.queryset.all().filter(roomsid=id)
             serializer = self.serializer_class(queryset, many=True)
             return Response(serializer.data)
         else:    
@@ -50,8 +50,8 @@ class RoomPictureView(generics.RetrieveUpdateDestroyAPIView):
     def put(self, request, *args, **kwargs):
         id=request.query_params.get('id')
 
-        if(id):
-            queryset=self.queryset.all().filter(id=id).first()
+        if(id is not None):
+            queryset=get_object_or_404(Roompictures,id=id)
             serializer = self.serializer_class(queryset, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
@@ -60,14 +60,12 @@ class RoomPictureView(generics.RetrieveUpdateDestroyAPIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request, *args, **kwargs):
            id=request.query_params.get('id')
-           if(id):
-                queryset=self.queryset.all().filter(id=id).first()
-                serializer = self.serializer_class(queryset, data=request.data)
-                serializer.is_valid(raise_exception=True)
+           if(id is not None):
+                queryset=get_object_or_404(Roompictures,id=id)
                 queryset.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
+                return Response({"message" :"delete succsessfully"},status=status.HTTP_204_NO_CONTENT)
            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)       
+                return Response({"message" :"need query param"},status=status.HTTP_400_BAD_REQUEST)       
 class registerRoomTypesView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = RoomTypesSerializer

@@ -14,4 +14,6 @@ urlpatterns = [
     path('get-user/',UserView.as_view(),name='get_user'),
     path('get-user-personal/',UserPersonal.as_view(),name='get_user_personal'),
     path('check-email',checkEmailView.as_view(),name='check_email'),
+    path('get-add/',Getaddresses.as_view(),name='check_email'),
+
 ]

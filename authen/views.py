@@ -108,3 +108,25 @@ class checkEmailView(APIView):
             return Response('this email already exist',status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
             return Response('email is ok',status=status.HTTP_200_OK)
+
+class Getaddresses(APIView):
+
+    def get(self, request):
+        p_code=request.query_params.get('p_code',None)
+        if (p_code==None):
+            return Response("need p_code query param",status=status.HTTP_400_BAD_REQUEST)
+        else:
+            addreses=[]
+            data={
+                "address": "منطقه ۱۱",
+                "city": "تهران",
+                "p_code": "۱۲۳۴۵۶۷۸۹۱۰",
+                "province": "تهران",
+                "street": "خیابان شهید بهشتی"
+
+            }
+            addreses.append(data)
+            addreses.append(data)
+            addreses.append(data)
+            addreses.append(data)
+            return Response(addreses,status=status.HTTP_200_OK)
