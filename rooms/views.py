@@ -83,12 +83,17 @@ class RoomTypesView(generics.RetrieveUpdateDestroyAPIView):
     def get(self, request, *args, **kwargs):
         id=request.query_params.get('id')
         if(id is not None):
-            queryset = self.queryset.all().filter(id=id)
-            serializer = self.serializer_class(queryset, many=True)
-            return Response(serializer.data)
+            queryset = get_object_or_404(Roomtypes,id=id)
+            serializer = self.serializer_class(queryset, many=False)
+            new_data=copy.deepcopy(serializer.data)
+            new_data['image']='/media/'+id+'.svg'
+            return Response(new_data)
         else:    
             serializers = self.serializer_class(self.get_queryset(), many=True)
-            return Response(data=serializers.data,status=status.HTTP_200_OK)
+            new_data=copy.deepcopy(serializers.data)
+            for i in new_data:
+                i['image']='/media/'+str(i['id'])+'.svg'
+            return Response(data=new_data,status=status.HTTP_200_OK)
     def put(self, request, *args, **kwargs):
         id=request.query_params.get('id')
         if(id is not None):
