@@ -11,7 +11,7 @@ class Roompictures(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
     roomsid = models.ForeignKey('Rooms', models.CASCADE, db_column='RoomsId')  # Field name made lowercase.
-    url = models.ImageField(db_column='URL', blank=True, null=True)  # Field name made lowercase.
+    image = models.ImageField(db_column='URL', blank=True, null=True)  # Field name made lowercase.
     comment = models.TextField(db_column='Comment', blank=True, null=True)  # Field name made lowercase.
     class Meta:
         # managed = False
