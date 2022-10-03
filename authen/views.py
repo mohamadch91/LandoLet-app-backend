@@ -118,11 +118,11 @@ class Getaddresses(APIView):
         else:
             addreses=[]
             data={
-                "address": "منطقه ۱۱",
-                "city": "تهران",
-                "p_code": "۱۲۳۴۵۶۷۸۹۱۰",
-                "province": "تهران",
-                "street": "خیابان شهید بهشتی"
+                "address": "2133 Grove Street",
+                "city": "New York",
+                "p_code": "10011",
+                "province": "New York",
+                "street": "simple"
 
             }
             addreses.append(data)
