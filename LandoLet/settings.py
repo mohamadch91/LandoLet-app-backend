@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
+from django.core.management.commands.runserver import Command as runserver
+# set default port to 8000
+runserver.default_port = "8000"
+# set default host to 0.0.0.0
+runserver.default_addr = "0.0.0.0"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
