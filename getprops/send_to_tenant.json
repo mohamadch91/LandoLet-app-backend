@@ -1,4 +1,4 @@
-for send to tenant
+For send to tenant
 http://127.0.0.1:8000/getprops/send_to_tenant/
 
 METHOD: POST
@@ -8,3 +8,33 @@ REQUEST BODY:
     "t_email": "a@b.com"
     
 }
+
+RESPONSE:
+ 
+{
+    "message": "property sent to tenant"
+}
+
+
+*********************************************************************************************************************
+
+IMPORTANT NOTE:
+
+propsview API changes
+
+for property view on main page
+you can use this URL 
+http://127.0.0.1:8000/getprops/propsview/
+each user can view his own properties
+METHOD: GET
+PARAMS:type
+
+you can use this for filteration of properties on main page
+
+type = owner for owner properties
+type = tenant for tenant properties
+
+
+RESPONSE: JSON
+
+same as before
