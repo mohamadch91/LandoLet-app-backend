@@ -4,6 +4,7 @@ from props.models import *
 from rooms.serializers import *
 from rooms.models import *
 import io 
+import os
 # Create your views here.
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
@@ -14,6 +15,7 @@ from authen.models import User
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
+from django.conf import settings
 class propsview(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Properties.objects.all()
@@ -174,7 +176,8 @@ class generatePDF(APIView):
     def get(self, request, **kwargs):
         buffer = io.BytesIO()
         x = canvas.Canvas(buffer)
-        x.drawString(0, 0, "Let's generate this pdf file.")
+        x.drawString(250,500, "Test pdf file.")
+        x.drawImage(os.path.join(settings.BASE_DIR, 'images.jpeg'), 250, 730, width=100, height=100)
         x.showPage()
         x.save()
         buffer.seek(0)
