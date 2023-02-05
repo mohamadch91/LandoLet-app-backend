@@ -16,7 +16,7 @@ from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from django.conf import settings
-class propsview(generics.ListAPIView):
+class PropsView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Properties.objects.all()
     def get(self, request, format=None):
@@ -61,7 +61,7 @@ class propsview(generics.ListAPIView):
 
         return Response(data=res,status=status.HTTP_200_OK)
 
-class propertydetail(generics.ListAPIView):
+class PropertyDetail(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Properties.objects.all()
     def get(self, request, format=None):
@@ -150,7 +150,7 @@ class propertydetail(generics.ListAPIView):
         }
         return Response(data=final_ans,status=status.HTTP_200_OK)    
 
-class sendtoTenantView(APIView):
+class SendtoTenantView(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self, request, format=None):
         prop_id=request.data["p_id"]
@@ -172,7 +172,7 @@ class sendtoTenantView(APIView):
     "message": "property sent to tenant"
 },status=status.HTTP_200_OK)
         
-class generatePDF(APIView):
+class GeneratePDF(APIView):
     def get(self, request, **kwargs):
         buffer = io.BytesIO()
         x = canvas.Canvas(buffer)

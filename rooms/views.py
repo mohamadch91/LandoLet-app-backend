@@ -24,7 +24,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 import copy
-class registerRoomPictureview(generics.CreateAPIView):
+class  RegisterRoomPictureView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = RoomPictureSerializer
     def create(self, request, *args, **kwargs):
@@ -66,7 +66,7 @@ class RoomPictureView(generics.RetrieveUpdateDestroyAPIView):
                 return Response({"message" :"delete succsessfully"},status=status.HTTP_204_NO_CONTENT)
            else:
                 return Response({"message" :"need query param"},status=status.HTTP_400_BAD_REQUEST)       
-class registerRoomTypesView(generics.CreateAPIView):
+class  RegisterRoomTypesView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = RoomTypesSerializer
     def create(self, request, *args, **kwargs):
@@ -113,7 +113,7 @@ class RoomTypesView(generics.RetrieveUpdateDestroyAPIView):
                 return Response({"message" :"delete succsessfully"},status=status.HTTP_204_NO_CONTENT)
            else:
                 return Response({"message" :"need query param"},status=status.HTTP_400_BAD_REQUEST)
-class registerRoomsView(generics.CreateAPIView):
+class  RegisterRoomsView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = RoomSerializer
     def create(self, request, *args, **kwargs):
@@ -156,7 +156,7 @@ class RooomView(generics.RetrieveUpdateDestroyAPIView):
                 return Response({"messsage": "need query param"},status=status.HTTP_400_BAD_REQUEST)       
 
 #furnitures
-class registerFurnitureView(APIView):
+class  RegisterFurnitureView(APIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = FurnituresSerializer
     def post(self, request):
@@ -169,7 +169,7 @@ class registerFurnitureView(APIView):
             return Response(ser.data,status=status.HTTP_201_CREATED)
         else:
             return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
-class Furnitureview(generics.RetrieveUpdateDestroyAPIView):
+class FurnitureView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Furnitures.objects.all()
     serializer_class = FurnituresSerializer
@@ -215,7 +215,7 @@ class Furnitureview(generics.RetrieveUpdateDestroyAPIView):
                 return Response({"message" :"need query param"},status=status.HTTP_400_BAD_REQUEST)       
 
   #furnituures in room
-class registerFurnitureInRoomView(generics.CreateAPIView):
+class  RegisterFurnitureInRoomView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = FurnituresInRoomsSerializer
     def post(self, request):
@@ -263,7 +263,7 @@ class FurnitureInRoomView(generics.RetrieveUpdateDestroyAPIView):
            else:
                 return Response({"message" :"need query param"},status=status.HTTP_400_BAD_REQUEST)       
 
-class registerFurnituresinroomspicturesView(generics.CreateAPIView):
+class  RegisterFurnituresinroomspicturesView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = FurnituresInRoomsPictureSerializer
     def create(self, request, *args, **kwargs):

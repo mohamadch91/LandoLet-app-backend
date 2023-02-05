@@ -21,7 +21,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 import copy
-class registerPropertyTypeview(generics.CreateAPIView):
+class RegisterPropertyTypeView(generics.CreateAPIView):
 
     permission_classes = (IsAuthenticated,)
     serializer_class = propertyTypeSerializer
@@ -67,7 +67,7 @@ class PropertyTypeView(generics.RetrieveUpdateDestroyAPIView):
                 return Response(status=status.HTTP_204_NO_CONTENT)
            else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)       
-class  registerPropertyview(generics.CreateAPIView):
+class  RegisterPropertyView(generics.CreateAPIView):
 
     permission_classes = (IsAuthenticated,)
     serializer_class = propertySerilizer
@@ -118,7 +118,7 @@ class PropertyView(generics.RetrieveUpdateDestroyAPIView):
                 return Response({
     "message": "need query param"
     },status=status.HTTP_400_BAD_REQUEST)  
-class registerkeysview(generics.CreateAPIView):
+class RegisterKeysView(generics.CreateAPIView):
 
     permission_classes = (IsAuthenticated,)
     serializer_class = keySerilizer
@@ -165,7 +165,7 @@ class KeyView(generics.RetrieveUpdateDestroyAPIView):
                 return Response(status=status.HTTP_204_NO_CONTENT)
            else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)     
-class registerPropertyKeysview(generics.CreateAPIView):
+class RegisterPropertyKeysView(generics.CreateAPIView):
 
     permission_classes = (IsAuthenticated,)
     serializer_class = propertyKeysSerializer
@@ -205,7 +205,7 @@ class PropertyKeysView(APIView):
             return Response(serializer.data)
             
     
-class registerMeterTypesview(APIView):
+class RegisterMeterTypesView(APIView):
     permission_classes = (IsAuthenticated,)
     # serializer_class=MeterTypeSerializer
     def post(self, request):
@@ -272,7 +272,7 @@ class MeterTypeView(generics.RetrieveUpdateDestroyAPIView):
                 return Response(status=status.HTTP_204_NO_CONTENT)
            else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)                         
-class registerMeterReadingview(generics.CreateAPIView):
+class RegisterMeterReadingView(generics.CreateAPIView):
 
     permission_classes = (IsAuthenticated,)
     serializer_class = MeterreadingSerializer
