@@ -180,7 +180,7 @@ class PropertyKeysView(APIView):
     # lookup_field = 'id'
     def post (self,request):
         ans=[]
-        p_key=Propertykeys.objects.all().delete()
+        Propertykeys.objects.all().delete()
         for i in request.data['keys']:
             data={
                 "propertiesid":request.data['propertyid'],

@@ -22,7 +22,7 @@ class propsview(generics.ListAPIView):
         all_rooms=Rooms.objects.all()
         room_types=Roomtypes.objects.all()
         statuss=PropertyStatus.objects.all()
-        for e in props:
+        for e in props.iterator():
             rooms=all_rooms.filter(propertiesid=e.id)
             stat=statuss.filter(property_id=e.id)
             stat=PropertyStatusSerilizer(stat,many=True)
@@ -75,7 +75,7 @@ class propertydetail(generics.ListAPIView):
         meter_type=q1|queryset
         keys=Keys.objects.all()
         meters=[]
-        for e in meter_reading:
+        for e in meter_reading.iterator():
             meter=MeterreadingSerializer(e,many=False)
             type=meter_type.filter(id=e.meterstypesid.id)
             mtype=MeterTypeSerializer(type,many=True)
@@ -85,7 +85,7 @@ class propertydetail(generics.ListAPIView):
             }
             meters.append(ans)
         prop_keys=[]    
-        for e in property_key:
+        for e in property_key.iterator():
             prop_key=propertyKeysSerializer(e,many=False)
             p_key=keys.filter(id=e.keysid.id)
             key=keySerilizer(p_key,many=True)
@@ -105,7 +105,7 @@ class propertydetail(generics.ListAPIView):
 
         fur_in_room_pictures=Furnituresinroomspictures.objects.all()
         room_ans=[]
-        for room in rooms:
+        for room in rooms.iterator():
             rtype=room_types.filter(id=room.roomtypesid.id)
             rs=RoomTypesSerializer(rtype,many=True)
             pictures=room_pictures.filter(roomsid=room.id)
