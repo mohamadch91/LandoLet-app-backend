@@ -171,11 +171,10 @@ class sendtoTenantView(APIView):
 },status=status.HTTP_200_OK)
         
 class generatePDF(APIView):
-    def get(self, request, format=None):
-        
+    def get(self, request, **kwargs):
         buffer = io.BytesIO()
         x = canvas.Canvas(buffer)
-        x.drawString(100, 100, "Let's generate this pdf file.")
+        x.drawString(0, 0, "Let's generate this pdf file.")
         x.showPage()
         x.save()
         buffer.seek(0)
