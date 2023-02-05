@@ -12,6 +12,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from authen.models import User
 from django.shortcuts import get_object_or_404
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
 class propsview(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Properties.objects.all()
@@ -167,3 +169,14 @@ class sendtoTenantView(APIView):
         return Response({
     "message": "property sent to tenant"
 },status=status.HTTP_200_OK)
+        
+class generatePDF(APIView):
+    def get(self, request, format=None):
+        
+        buffer = io.BytesIO()
+        x = canvas.Canvas(buffer)
+        x.drawString(100, 100, "Let's generate this pdf file.")
+        x.showPage()
+        x.save()
+        buffer.seek(0)
+        return FileResponse(buffer, as_attachment=True, filename='test.pdf')
