@@ -21,10 +21,10 @@ class PropsView(generics.ListAPIView):
     queryset = Properties.objects.all()
     def get(self, request, format=None):
         type=request.query_params.get('type')
-        if (type=="owner"):
-            props=Properties.objects.filter(usersownerid=request.user.id)
         if (type=="tenant"):
             props=Properties.objects.filter(userstenantid=request.user.id)
+        else:
+            props=Properties.objects.filter(usersownerid=request.user.id)
         res=[]
         all_rooms=Rooms.objects.all()
         room_types=Roomtypes.objects.all()
