@@ -3,7 +3,7 @@ from props.serializers import *
 from props.models import *
 from rooms.serializers import *
 from rooms.models import *
-
+import io 
 # Create your views here.
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated

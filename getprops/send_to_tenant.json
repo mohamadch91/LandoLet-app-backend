@@ -34,6 +34,14 @@ you can use this for filteration of properties on main page
 type = owner for owner properties
 type = tenant for tenant properties
 
+EXAMPLE:
+
+http://127.0.0.1:8000/getprops/propsview/?type=owner
+
+or 
+
+http://127.0.0.1:8000/getprops/propsview/?type=tenant
+
 
 RESPONSE: JSON
 
@@ -43,3 +51,14 @@ same as before
 *********************************************************************************************************************
 
 Generate PDF
+
+http://127.0.0.1:8000/getprops/generate_pdf/<int:p_id>/
+
+METHOD: GET
+PARAMS: p_id
+Example:
+
+http://127.0.01:8000/getprops/generate_pdf/1/
+
+RESPONSE: PDF
+
