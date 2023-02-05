@@ -16,9 +16,12 @@ class propsview(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Properties.objects.all()
     def get(self, request, format=None):
+        type=request.query_params.get('type')
+        if (type=="owner"):
+            props=Properties.objects.filter(usersownerid=request.user.id)
+        if (type=="tenant"):
+            props=Properties.objects.filter(userstenantid=request.user.id)
         res=[]
-        props=Properties.objects.all()
-        props=props.filter(usersownerid=request.user.id)
         all_rooms=Rooms.objects.all()
         room_types=Roomtypes.objects.all()
         statuss=PropertyStatus.objects.all()
