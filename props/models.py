@@ -15,11 +15,11 @@ from django.conf import settings
 
 
 class Keys(models.Model):
-    id = models.AutoField(db_column='Id', primary_key=True,db_index=True)  # Field name made lowercase.
-      # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True,db_index=True)   
+       
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
-    types = models.TextField(db_column='Types', blank=True, null=True,db_index=True)  # Field name made lowercase.
+    updated_at = models.DateTimeField(auto_now=True)   
+    types = models.TextField(db_column='Types', blank=True, null=True,db_index=True)   
 
     class Meta:
         # managed = False
@@ -28,14 +28,14 @@ class Keys(models.Model):
 
 
 class Meterreading(models.Model):
-    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-      # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)   
+       
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
-    propertiesid = models.ForeignKey('Properties', models.CASCADE, db_column='PropertiesId',db_index=True)  # Field name made lowercase.
-    meterstypesid = models.ForeignKey('Meterstypes', models.CASCADE, db_column='MetersTypesId',db_index=True)  # Field name made lowercase.
-    metervalue = models.TextField(db_column='MeterValue', blank=True, null=True)  # Field name made lowercase.
-    pictureurl=models.ImageField(upload_to='props/meters/',db_column='PictureURL', blank=True,null=True)  # Field name made lowercase.
+    updated_at = models.DateTimeField(auto_now=True)   
+    propertiesid = models.ForeignKey('Properties', models.CASCADE, db_column='PropertiesId',db_index=True)   
+    meterstypesid = models.ForeignKey('Meterstypes', models.CASCADE, db_column='MetersTypesId',db_index=True)   
+    metervalue = models.TextField(db_column='MeterValue', blank=True, null=True)   
+    pictureurl=models.ImageField(upload_to='props/meters/',db_column='PictureURL', blank=True,null=True)   
 
     class Meta:
         # managed = False
@@ -43,11 +43,11 @@ class Meterreading(models.Model):
 
 
 class Meterstypes(models.Model):
-    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)   
+     
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
-    meters = models.TextField(db_column='Meters', blank=True, null=True,db_index=True)  # Field name made lowercase.
+    updated_at = models.DateTimeField(auto_now=True)   
+    meters = models.TextField(db_column='Meters', blank=True, null=True,db_index=True)   
     is_default = models.BooleanField(db_column='IsDefault',blank=True ,null=True,db_index=True)
     user_id=models.ForeignKey(settings.AUTH_USER_MODEL,db_column='userId',on_delete= models.CASCADE,blank=True,null=True,db_index=True)
 
@@ -57,17 +57,17 @@ class Meterstypes(models.Model):
 
 
 class Properties(models.Model):
-    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-      # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)   
+       
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
-    propertytypesid = models.ForeignKey('Propertytypes', models.CASCADE, db_column='PropertyTypesId',db_index=True)  # Field name made lowercase.
-    usersownerid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersOwnerId',related_name='User_owner_id',blank=True,null=True,db_index=True)  # Field name made lowercase.
-    userslandlordid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersLandlordId',related_name='User_landlord_id',blank=True,null=True,db_index=True)  # Field name made lowercase.
-    userstenantid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersTenantId',related_name='User_tenant_id',blank=True,null=True,db_index=True)  # Field name made lowercase.
-    postalcode = models.TextField(db_column='PostalCode', blank=True, null=True)  # Field name made lowercase.
-    fulladdress = models.TextField(db_column='FullAddress', blank=True, null=True)  # Field name made lowercase.
-    condition = models.IntegerField(db_column='Condition',db_index=True)  # Field name made lowercase.
+    updated_at = models.DateTimeField(auto_now=True)   
+    propertytypesid = models.ForeignKey('Propertytypes', models.CASCADE, db_column='PropertyTypesId',db_index=True)   
+    usersownerid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersOwnerId',related_name='User_owner_id',blank=True,null=True,db_index=True)   
+    userslandlordid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersLandlordId',related_name='User_landlord_id',blank=True,null=True,db_index=True)   
+    userstenantid = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE, db_column='UsersTenantId',related_name='User_tenant_id',blank=True,null=True,db_index=True)   
+    postalcode = models.TextField(db_column='PostalCode', blank=True, null=True)   
+    fulladdress = models.TextField(db_column='FullAddress', blank=True, null=True)   
+    condition = models.IntegerField(db_column='Condition',db_index=True)   
 
     class Meta:
         # managed = False
@@ -75,14 +75,14 @@ class Properties(models.Model):
 
 
 class Propertykeys(models.Model):
-    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-      # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)   
+       
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
-    propertiesid = models.ForeignKey(Properties, models.CASCADE, db_column='PropertiesId',db_index=True)  # Field name made lowercase.
-    keysid = models.ForeignKey(Keys, models.CASCADE, db_column='KeysId',db_index=True)  # Field name made lowercase.
+    updated_at = models.DateTimeField(auto_now=True)   
+    propertiesid = models.ForeignKey(Properties, models.CASCADE, db_column='PropertiesId',db_index=True)   
+    keysid = models.ForeignKey(Keys, models.CASCADE, db_column='KeysId',db_index=True)   
     count=models.IntegerField(db_column='Count',blank=True,null=True)
-    # pictureurl=models.ImageField(upload_to='props/',db_column='PictureURL', blank=True,null=True)  # Field name made lowercase.
+    # pictureurl=models.ImageField(upload_to='props/',db_column='PictureURL', blank=True,null=True)   
 
     class Meta:
         # managed = False
@@ -90,32 +90,32 @@ class Propertykeys(models.Model):
 
 
 class Propertytypes(models.Model):
-    id = models.AutoField(db_column='Id', primary_key=True,db_index=True)  # Field name made lowercase.
-      # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True,db_index=True)   
+       
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
-    types = models.TextField(db_column='Types', blank=True, null=True,db_index=True)  # Field name made lowercase.
+    updated_at = models.DateTimeField(auto_now=True)   
+    types = models.TextField(db_column='Types', blank=True, null=True,db_index=True)   
     # pictureurl=models.ImageField(upload_to='props/',db_column='PictureURL', blank=True,null=True)
     class Meta:
         # managed = False
         db_table = 'PropertyTypes'
 
 class PropertyStatus(models.Model):
-    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-      # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)   
+       
     property_id=models.ForeignKey(Properties,db_column="PropertyId",blank=True,null=True,on_delete=models.CASCADE,db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
+    updated_at = models.DateTimeField(auto_now=True)   
     comment=models.TextField(db_column="Comment",blank=True,null=True,db_index=True)
     class Meta:
         db_table = 'PropertyStatus'
 
 class PropertyComment(models.Model):
-    id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
-      # Field name made lowercase.
+    id = models.AutoField(db_column='Id', primary_key=True)   
+       
     property_id=models.ForeignKey(Properties,db_column="PropertyId",blank=True,null=True,on_delete=models.CASCADE,db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)  # Field name made lowercase.
+    updated_at = models.DateTimeField(auto_now=True)   
     comment=models.TextField(db_column="Comment",blank=True,null=True,db_index=True)
     class Meta:
         db_table = 'PropertyComment'
