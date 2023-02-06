@@ -5,7 +5,9 @@ METHOD: POST
 REQUEST BODY:
   {
     "p_id": 1,
-    "t_email": "a@b.com"
+    "t_email": "a@b.com",
+    "signature": "file",
+    "full_name": "Arian choopan"
     
 }
 
