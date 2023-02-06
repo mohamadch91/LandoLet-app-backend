@@ -170,6 +170,8 @@ class SendtoTenantView(APIView):
         if(tenant_id==None):
               return Response({"message":"need tenant id in request"},status=status.HTTP_400_BAD_REQUEST)
         prop.userstenantid=tenant
+        prop.signature=signature
+        prop.signature_name=full_name
         prop.save()
         return Response({
     "message": "property sent to tenant"
