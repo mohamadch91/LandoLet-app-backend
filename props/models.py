@@ -16,7 +16,6 @@ from django.conf import settings
 
 class Keys(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True,db_index=True)   
-       
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
     types = models.TextField(db_column='Types', blank=True, null=True,db_index=True)   
@@ -29,7 +28,6 @@ class Keys(models.Model):
 
 class Meterreading(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)   
-       
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
     propertiesid = models.ForeignKey('Properties', models.CASCADE, db_column='PropertiesId',db_index=True)   
@@ -44,7 +42,6 @@ class Meterreading(models.Model):
 
 class Meterstypes(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)   
-     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
     meters = models.TextField(db_column='Meters', blank=True, null=True,db_index=True)   
@@ -58,7 +55,6 @@ class Meterstypes(models.Model):
 
 class Properties(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)   
-       
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
     propertytypesid = models.ForeignKey('Propertytypes', models.CASCADE, db_column='PropertyTypesId',db_index=True)   
@@ -76,7 +72,6 @@ class Properties(models.Model):
 
 class Propertykeys(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)   
-       
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
     propertiesid = models.ForeignKey(Properties, models.CASCADE, db_column='PropertiesId',db_index=True)   
@@ -91,7 +86,6 @@ class Propertykeys(models.Model):
 
 class Propertytypes(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True,db_index=True)   
-       
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
     types = models.TextField(db_column='Types', blank=True, null=True,db_index=True)   
@@ -102,7 +96,6 @@ class Propertytypes(models.Model):
 
 class PropertyStatus(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)   
-       
     property_id=models.ForeignKey(Properties,db_column="PropertyId",blank=True,null=True,on_delete=models.CASCADE,db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
@@ -112,7 +105,6 @@ class PropertyStatus(models.Model):
 
 class PropertyComment(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)   
-       
     property_id=models.ForeignKey(Properties,db_column="PropertyId",blank=True,null=True,on_delete=models.CASCADE,db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
