@@ -153,8 +153,11 @@ class PropertyDetail(generics.ListAPIView):
 class SendtoTenantView(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self, request, format=None):
+        full_name=request.data["full_name"]
+        signature=request.data["signature"]
+        if(full_name==None or signature==None):
+            return Response({"message":"need full name and signature in request"},status=status.HTTP_400_BAD_REQUEST)
         prop_id=request.data["p_id"]
-
         prop=get_object_or_404(Properties,id=prop_id)
         if(prop_id==None):
               return Response({"message":"need property id in request"},status=status.HTTP_400_BAD_REQUEST)
