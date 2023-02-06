@@ -172,6 +172,7 @@ class SendtoTenantView(APIView):
         prop.userstenantid=tenant
         prop.signature=signature
         prop.signature_name=full_name
+        prop.condition = 1
         prop.save()
         return Response({
     "message": "property sent to tenant"
