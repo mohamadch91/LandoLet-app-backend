@@ -68,13 +68,13 @@ class MeterreadingSerializer(serializers.ModelSerializer):
                 'validators': [UniqueValidator(queryset=Meterreading.objects.all())]
             }
         }        
-class PropertyStatusSerilizer(serializers.ModelSerializer):
+class PropertyComment(serializers.ModelSerializer):
     class Meta:
-        model = PropertyStatus
+        model = PropertyComment
         fields = '__all__'
         read_only_fields = ('id',)
         extra_kwargs = {
             'name': {
-                'validators': [UniqueValidator(queryset=PropertyStatus.objects.all())]
+                'validators': [UniqueValidator(queryset=PropertyComment.objects.all())]
             }
         }        
