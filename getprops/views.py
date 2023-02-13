@@ -269,3 +269,10 @@ class GeneratePDF(APIView):
         x.save()
         buffer.seek(0)
         return FileResponse(buffer, as_attachment=True, filename='test.pdf')
+
+
+class Fix(APIView):
+    def get(self,request):
+        for i in Properties.objects.all().iterator():
+            i.condition=1
+            i.save()
