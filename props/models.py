@@ -64,6 +64,7 @@ class Properties(models.Model):
     postalcode = models.TextField(db_column='PostalCode', blank=True, null=True)   
     fulladdress = models.TextField(db_column='FullAddress', blank=True, null=True)   
     status = models.IntegerField(db_column='status',db_index=True,default=0)   
+    condition = models.IntegerField(db_column='Condition',db_index=True,default=0)
     signature=models.ImageField(upload_to='props/signatures/',db_column='Signature', blank=True,null=True)
     signature_name=models.CharField(max_length=100,db_column='SignatureName', blank=True,null=True)
     class Meta:
