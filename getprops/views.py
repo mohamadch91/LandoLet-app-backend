@@ -32,7 +32,7 @@ class PropsView(generics.ListAPIView):
         for e in props.iterator():
             rooms=all_rooms.filter(propertiesid=e.id)
             stat=statuss.filter(property_id=e.id)
-            stat=PropertyComment(stat,many=True)
+            stat=PropertyCommentSerializer(stat,many=True)
             proptype=Propertytypes.objects.all().filter(id=e.propertytypesid.id)
             propertytype = propertyTypeSerializer(proptype,many=True)
             rooms = RoomSerializer(rooms,many=True)

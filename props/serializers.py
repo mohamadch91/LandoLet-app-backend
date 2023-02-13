@@ -68,7 +68,7 @@ class MeterreadingSerializer(serializers.ModelSerializer):
                 'validators': [UniqueValidator(queryset=Meterreading.objects.all())]
             }
         }        
-class PropertyComment(serializers.ModelSerializer):
+class PropertyCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = PropertyComment
         fields = '__all__'
