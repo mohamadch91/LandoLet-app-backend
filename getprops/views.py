@@ -266,13 +266,21 @@ class GeneratePDF(APIView):
         print(final_ans)
         buffer = io.BytesIO()
         x = canvas.Canvas(buffer)
-        
+    
         x.drawString(10,800, "Propert owner: "+prop.usersownerid.email)
-        x.drawString(10,750, "Propert tenant: "+prop.userstenantid.email)        
-        x.drawString(10,730, "Propert landlord: "+prop.userslandlordid.email)
-        
-        x.drawImage(os.path.join(settings.BASE_DIR, 'images.jpeg'), 250, 730, width=100, height=100)
+        if (prop.userslandlordid):
+            x.drawString(10,780, "Propert landlord: "+prop.userslandlordid.email)
+        if (prop.userstenantid):
+            x.drawString(10,760, "Propert tenant: "+prop.userstenantid.email)
+        x.drawString(10,740, "Propert address: "+prop.fulladdress)
+        x.drawString(10,720, "Prperty postal code: "+prop.postalcode)
         x.showPage()
+        
+        x.drawString(200,780, "landlord name: "+prop.landlord_signature_name)
+        x.drawString(200,780, "tenant name: "+prop.tenant_signature_name)
+        x.drawImage(os.path.join(settings.BASE_DIR, '/media/signatures/'+str(prop.landlord_signature)), 200, 600, width=200, height=200)
+        x.drawImage(prop.os.path.join(settings.BASE_DIR, '/media/signatures/'+str(prop.tenant_signature)), 200, 300, width=200, height=200)      
+        x.drawImage(os.path.join(settings.BASE_DIR, 'images.jpeg'), 250, 730, width=100, height=100)
         x.save()
         buffer.seek(0)
         return FileResponse(buffer, as_attachment=True, filename='test.pdf')
