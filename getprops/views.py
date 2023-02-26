@@ -260,6 +260,7 @@ class GeneratePDF(APIView):
 
                 }
         }
+        return Response(final_ans,status=status.HTTP_200_OK)
  
         buffer = io.BytesIO()
         x = canvas.Canvas(buffer)
