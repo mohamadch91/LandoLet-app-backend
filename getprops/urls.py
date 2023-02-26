@@ -7,7 +7,6 @@ urlpatterns = [
     path('propertydetail/', PropertyDetail.as_view(), name='get_prop_detail'),
     path('send_to_tenant/', SendtoTenantView.as_view(), name='get_prop_detail'),
     path('generatePDF/<int:id>/', GeneratePDF.as_view(), name='get_prop_pdf'),
-    path('fix', Fix.as_view(), name='database fix'),
     
     
 
