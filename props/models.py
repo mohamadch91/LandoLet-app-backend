@@ -65,8 +65,11 @@ class Properties(models.Model):
     fulladdress = models.TextField(db_column='FullAddress', blank=True, null=True)   
     status = models.IntegerField(db_column='status',db_index=True,default=0)   
     condition = models.IntegerField(db_column='Condition',db_index=True,default=1)
-    signature=models.ImageField(upload_to='props/signatures/',db_column='Signature', blank=True,null=True)
-    signature_name=models.CharField(max_length=100,db_column='SignatureName', blank=True,null=True)
+    landlord_signature=models.ImageField(upload_to='props/signatures/',db_column='Signature', blank=True,null=True)
+    landlord_signature_name=models.CharField(max_length=100,db_column='SignatureName', blank=True,null=True)
+    tenant_signature=models.ImageField(upload_to='props/signatures/',db_column='T_Signature', blank=True,null=True)
+    tenant_signature_name=models.CharField(max_length=100,db_column='T_SignatureName', blank=True,null=True)
+
     class Meta:
         # managed = False
         db_table = 'Properties'

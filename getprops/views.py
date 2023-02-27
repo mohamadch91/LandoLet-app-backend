@@ -65,11 +65,12 @@ class PropertyDetail(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Properties.objects.all()
     def get(self, request, format=None):
-        prop_id=request.query_params.get('p_id')
-        prop=get_object_or_404(Properties,id=prop_id)
+        prop_id=request.query_params.get('p_id',None)
         if(prop_id==None):
               return Response({"message":"need property id query param"},status=status.HTTP_400_BAD_REQUEST)
 
+        prop=get_object_or_404(Properties,id=prop_id)
+        
         ser=propertySerilizer(prop,many=False)
         if(ser.data["usersownerid"]!=request.user.id):
             return Response({
@@ -179,6 +180,7 @@ class SendtoTenantView(APIView):
 },status=status.HTTP_200_OK)
         
 class GeneratePDF(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self, request, **kwargs):
         prop_id=int(kwargs['id'])
         prop=get_object_or_404(Properties,id=prop_id)
@@ -260,11 +262,15 @@ class GeneratePDF(APIView):
 
                 }
         }
-        return Response(final_ans,status=status.HTTP_200_OK)
- 
+        # return Response(final_ans,status=status.HTTP_200_OK)
+        print(final_ans)
         buffer = io.BytesIO()
         x = canvas.Canvas(buffer)
-        x.drawString(250,500, "Test pdf file.")
+        
+        x.drawString(10,800, "Propert owner: "+prop.usersownerid.email)
+        x.drawString(10,750, "Propert tenant: "+prop.userstenantid.email)        
+        x.drawString(10,730, "Propert landlord: "+prop.userslandlordid.email)
+        
         x.drawImage(os.path.join(settings.BASE_DIR, 'images.jpeg'), 250, 730, width=100, height=100)
         x.showPage()
         x.save()
