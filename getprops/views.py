@@ -216,7 +216,7 @@ class GeneratePDF(APIView):
                 "key":key.data
             }
             prop_keys.append(ans)    
-        rooms=Rooms.objects.all().filter(propertiesid=prop_id)
+        rooms=Rooms.objects.filter(propertiesid=prop_id)
         room_types=Roomtypes.objects.all()
         room_pictures=Roompictures.objects.all()
         fur_in_room=Furnituresinrooms.objects.all()
@@ -267,19 +267,35 @@ class GeneratePDF(APIView):
         # print(final_ans)
         buffer = io.BytesIO()
         x = canvas.Canvas(buffer)
-    
-        x.drawString(10,800, "Propert owner: "+prop.usersownerid.email)
+        # propert details
+        x.drawString(10,800, "owner: "+prop.usersownerid.email)
         if (prop.userslandlordid):
-            x.drawString(10,780, "Propert landlord: "+prop.userslandlordid.email)
+            x.drawString(10,780, "landlord: "+prop.userslandlordid.email)
         if (prop.userstenantid):
-            x.drawString(10,760, "Propert tenant: "+prop.userstenantid.email)
-        x.drawString(10,740, "Propert address: "+prop.fulladdress)
-        x.drawString(10,720, "Prperty postal code: "+prop.postalcode)
-        x.showPage()
+            x.drawString(10,760, "tenant: "+prop.userstenantid.email)
+        x.drawString(10,740, "address: "+prop.fulladdress)
+        x.drawString(10,720, "postal code: "+prop.postalcode)
+        # rooms details
+        rooms=final_ans["property"]["rooms"]
+        x.drawString(10,700, "Rooms: ")
+        y=680
+        for i in range(len(rooms)):
+            x.drawString(10,y, "Room Title: "+rooms[i]["room"]["roomtitle"])
+            x.drawString(250,y, "Room Type: "+rooms[i]["roomtype"][0]["types"])
+            pictures=rooms[i]["pictures"]
+            for j in range(len(pictures)):
+                x.drawImage(os.path.join(settings.BASE_DIR,pictures[j]["image"]), 10, y-20, width=100, height=100)
+                x.drawString(120,y-20, "comment: "+pictures[j]["comment"])
+                y=y-120
+            
+            
+            
         
+        x.showPage()
+
+        # draw furnitures 
         x.drawString(100,780, "landlord name: "+prop.landlord_signature_name)
         x.drawString(400,780, "tenant name: "+prop.tenant_signature_name)
-        print(str(settings.BASE_DIR)+'/media/props/signatures/'+str(prop.landlord_signature))
         x.drawImage(os.path.join(settings.BASE_DIR,'/media/props/signatures/',prop.landlord_signature.path), 100, 600, width=150, height=150)
         x.drawImage(os.path.join(settings.BASE_DIR,'/media/props/signatures/',prop.landlord_signature.path), 400, 600, width=150, height=150)      
         # x.drawImage(str(settings.BASE_DIR)+'images.jpg', 250, 730, width=100, height=100)

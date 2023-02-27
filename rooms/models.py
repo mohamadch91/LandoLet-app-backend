@@ -58,7 +58,6 @@ class Furnitures(models.Model):
 
 class Furnituresinrooms(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)   
-       
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
     furnituresid = models.ForeignKey(Furnitures, models.CASCADE, db_column='FurnituresId',blank=True ,null=True,db_index=True)   
