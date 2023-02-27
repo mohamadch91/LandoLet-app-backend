@@ -16,6 +16,7 @@ from django.shortcuts import get_object_or_404
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from django.conf import settings
+from pathlib import Path
 class PropsView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Properties.objects.all()
@@ -230,7 +231,6 @@ class GeneratePDF(APIView):
             rtype=room_types.filter(id=room.roomtypesid.id)
             rs=RoomTypesSerializer(rtype,many=True)
             pictures=room_pictures.filter(roomsid=room.id)
-            print(pictures.count())
             room_pictures=RoomPictureSerializer(pictures,many=True)
             fur_in_rooms=fur_in_room.filter(roomsid=room.id)
             fur_in_room_ans=[]
@@ -263,8 +263,7 @@ class GeneratePDF(APIView):
 
                 }
         }
-        # return Response(final_ans,status=status.HTTP_200_OK)
-        # print(final_ans)
+        
         buffer = io.BytesIO()
         x = canvas.Canvas(buffer)
         # propert details
@@ -283,11 +282,62 @@ class GeneratePDF(APIView):
             x.drawString(10,y, "Room Title: "+rooms[i]["room"]["roomtitle"])
             x.drawString(250,y, "Room Type: "+rooms[i]["roomtype"][0]["types"])
             pictures=rooms[i]["pictures"]
+            xx=10
             for j in range(len(pictures)):
-                x.drawImage(os.path.join(settings.BASE_DIR,pictures[j]["image"]), 10, y-20, width=100, height=100)
-                x.drawString(120,y-20, "comment: "+pictures[j]["comment"])
-                y=y-120
-            
+                pic_path=Path(str(settings.BASE_DIR)+pictures[j]["image"])
+                x.drawImage(pic_path, xx, y-130, width=100, height=100)
+                str_width=x.stringWidth(pictures[j]["comment"])
+                print(str_width)
+                counter=0
+                if (str_width>150):
+                    while(str_width>150):
+                        if(counter>5):
+                            x.drawString(xx,y-150-counter*10, ".....")
+                            break
+                        else:
+                            x.drawString(xx,y-150-counter*10, pictures[j]["comment"][counter*15:(counter+1)*15])
+                            counter+=1
+                            str_width-=150
+                else:
+                    x.drawString(xx,y-150, pictures[j]["comment"])
+                if (j%3==2):
+                    y=y-200
+                    if (y<0):
+                        x.showPage()
+                        y=780
+                    xx=10
+                else:
+                    xx+=200
+            x.showPage()
+            xx=10
+            y=780
+            furniture=rooms[i]["furnituresinrooms"]
+            x.drawString(10,y, "Furniture: ")
+            for j in range(len(furniture)):
+                fur=furniture[j]["furniture"]
+                type=furniture[j]["furnituretype"][0]
+                x.drawString(10,y-20, "Furniture Type: "+type["furniture"])
+                x.drawString(250,y-20, "Furniture quantity: "+fur["quantity"])
+                if (fur["comment"]):
+                    str_width=x.stringWidth(fur["comment"])
+                    print(str_width)
+                    counter=0
+                    if (str_width>450):
+                        while(str_width>450):
+                            if(counter>5):
+                                x.drawString(10,y-30-counter*10, ".....")
+                                break
+                            else:
+                                x.drawString(xx,y-30-counter*10, fur["comment"][counter*15:(counter+1)*15])
+                                counter+=1
+                                str_width-=450
+                    else:
+                        x.drawString(10,y-30, fur["comment"])
+                furniture_pictures=furniture[j]["pictures"]
+                
+                
+                
+                
             
             
         
