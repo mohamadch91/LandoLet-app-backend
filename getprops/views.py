@@ -117,12 +117,12 @@ class PropertyDetail(generics.ListAPIView):
             rtype=room_types.filter(id=room.roomtypesid.id)
             rs=RoomTypesSerializer(rtype,many=True)
             pictures=room_pictures.filter(roomsid=room.id)
-            pictures=RoomPictureSerializer(pictures,many=True)
+            room_pictures=RoomPictureSerializer(pictures,many=True)
             fur_in_rooms=fur_in_room.filter(roomsid=room.id)
             fur_in_room_ans=[]
             for fs in fur_in_rooms:
-                fur_in_room_pictures=fur_in_room_pictures.filter(furnituresinroomsid=fs.id)
-                pictures=FurnituresInRoomsPictureSerializer(fur_in_room_pictures,many=True)
+                fur_in_room_picture=fur_in_room_pictures.filter(furnituresinroomsid=fs.id)
+                pictures=FurnituresInRoomsPictureSerializer(fur_in_room_picture,many=True)
                 ftype=fur.filter(id=fs.furnituresid.id)
                 ftype=FurnituresSerializer(ftype,many=True)
                 furniture=FurnituresInRoomsSerializer(fs,many=False)
@@ -136,7 +136,7 @@ class PropertyDetail(generics.ListAPIView):
             ans={
                 "room":roomser.data,
                 "roomtype":rs.data,
-                "pictures":pictures.data,
+                "pictures":room_pictures.data,
                 "furnituresinrooms":fur_in_room_ans
             }
             room_ans.append(ans)
@@ -230,12 +230,13 @@ class GeneratePDF(APIView):
             rtype=room_types.filter(id=room.roomtypesid.id)
             rs=RoomTypesSerializer(rtype,many=True)
             pictures=room_pictures.filter(roomsid=room.id)
+            print(pictures.count())
             room_pictures=RoomPictureSerializer(pictures,many=True)
             fur_in_rooms=fur_in_room.filter(roomsid=room.id)
             fur_in_room_ans=[]
             for fs in fur_in_rooms:
-                fur_in_room_pictures=fur_in_room_pictures.filter(furnituresinroomsid=fs.id)
-                pictures=FurnituresInRoomsPictureSerializer(fur_in_room_pictures,many=True)
+                fur_in_room_picture=fur_in_room_pictures.filter(furnituresinroomsid=fs.id)
+                pictures=FurnituresInRoomsPictureSerializer(fur_in_room_picture,many=True)
                 ftype=fur.filter(id=fs.furnituresid.id)
                 ftype=FurnituresSerializer(ftype,many=True)
                 furniture=FurnituresInRoomsSerializer(fs,many=False)
@@ -263,7 +264,7 @@ class GeneratePDF(APIView):
                 }
         }
         # return Response(final_ans,status=status.HTTP_200_OK)
-        print(final_ans)
+        # print(final_ans)
         buffer = io.BytesIO()
         x = canvas.Canvas(buffer)
     
