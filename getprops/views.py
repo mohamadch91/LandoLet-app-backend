@@ -280,7 +280,7 @@ class GeneratePDF(APIView):
         rooms=final_ans["property"]["rooms"]
         x.setFontSize(18)
         
-        x.drawString(10,700, "Rooms: ")
+        x.drawString(10,690, "Rooms: ")
         x.setFontSize(12)
         y=680
         for i in range(len(rooms)):
@@ -428,11 +428,14 @@ class GeneratePDF(APIView):
         x.showPage()
         page_counter+=1
         x.drawString(300,40,str(page_counter))
+        x.setFontSize(18)
+        x.drawString(10,800, "Signatures : ")
+        x.setFontSize(12)
         # draw furnitures 
-        x.drawString(100,780, "landlord name: "+prop.landlord_signature_name)
-        x.drawString(400,780, "tenant name: "+prop.tenant_signature_name)
-        x.drawImage(os.path.join(settings.BASE_DIR,'/media/props/signatures/',prop.landlord_signature.path), 100, 600, width=150, height=150)
-        x.drawImage(os.path.join(settings.BASE_DIR,'/media/props/signatures/',prop.landlord_signature.path), 400, 600, width=150, height=150)      
+        x.drawString(60,780, "landlord : "+prop.landlord_signature_name)
+        x.drawString(370,780, "tenant : "+prop.tenant_signature_name)
+        x.drawImage(os.path.join(settings.BASE_DIR,'/media/props/signatures/',prop.landlord_signature.path), 40, 620, width=150, height=150)
+        x.drawImage(os.path.join(settings.BASE_DIR,'/media/props/signatures/',prop.landlord_signature.path), 340, 620, width=150, height=150)      
         # x.drawImage(str(settings.BASE_DIR)+'images.jpg', 250, 730, width=100, height=100)
         x.save()
         buffer.seek(0)
