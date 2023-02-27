@@ -267,6 +267,8 @@ class GeneratePDF(APIView):
         buffer = io.BytesIO()
         x = canvas.Canvas(buffer)
         # propert details
+        page_counter=1
+        x.drawString(300,40,str(page_counter))
         x.drawString(10,800, "owner: "+prop.usersownerid.email)
         if (prop.userslandlordid):
             x.drawString(10,780, "landlord: "+prop.userslandlordid.email)
@@ -276,18 +278,21 @@ class GeneratePDF(APIView):
         x.drawString(10,720, "postal code: "+prop.postalcode)
         # rooms details
         rooms=final_ans["property"]["rooms"]
+        x.setFontSize(18)
+        
         x.drawString(10,700, "Rooms: ")
+        x.setFontSize(12)
         y=680
         for i in range(len(rooms)):
-            x.drawString(10,y, "Room Title: "+rooms[i]["room"]["roomtitle"])
-            x.drawString(250,y, "Room Type: "+rooms[i]["roomtype"][0]["types"])
+            x.drawString(10,y-10,"-"*400)
+            x.drawString(10,y-20, "Room Title: "+rooms[i]["room"]["roomtitle"])
+            x.drawString(250,y-20, "Room Type: "+rooms[i]["roomtype"][0]["types"])
             pictures=rooms[i]["pictures"]
             xx=10
             for j in range(len(pictures)):
                 pic_path=Path(str(settings.BASE_DIR)+pictures[j]["image"])
                 x.drawImage(pic_path, xx, y-130, width=100, height=100)
                 str_width=x.stringWidth(pictures[j]["comment"])
-                print(str_width)
                 counter=0
                 if (str_width>150):
                     while(str_width>150):
@@ -304,45 +309,125 @@ class GeneratePDF(APIView):
                     y=y-200
                     if (y<0):
                         x.showPage()
+                        page_counter+=1
+                        x.drawString(300,40,str(page_counter))
                         y=780
                     xx=10
                 else:
                     xx+=200
             x.showPage()
+            page_counter+=1
+            x.drawString(300,40,str(page_counter))
             xx=10
             y=780
             furniture=rooms[i]["furnituresinrooms"]
+            x.setFontSize(18)
+            
             x.drawString(10,y, "Furniture: ")
+            x.setFontSize(12)
+            
             for j in range(len(furniture)):
+                x.drawString(10,y-10,"-"*400)
                 fur=furniture[j]["furniture"]
                 type=furniture[j]["furnituretype"][0]
                 x.drawString(10,y-20, "Furniture Type: "+type["furniture"])
-                x.drawString(250,y-20, "Furniture quantity: "+fur["quantity"])
+                x.drawString(250,y-20, "Furniture quantity: "+str(fur["quantity"]))
                 if (fur["comment"]):
                     str_width=x.stringWidth(fur["comment"])
-                    print(str_width)
                     counter=0
                     if (str_width>450):
                         while(str_width>450):
                             if(counter>5):
-                                x.drawString(10,y-30-counter*10, ".....")
+                                x.drawString(10,y-40-counter*10, ".....")
                                 break
                             else:
-                                x.drawString(xx,y-30-counter*10, fur["comment"][counter*15:(counter+1)*15])
+                                x.drawString(10,y-40-counter*10, fur["comment"][counter*80:(counter+1)*80])
                                 counter+=1
                                 str_width-=450
                     else:
-                        x.drawString(10,y-30, fur["comment"])
+                        x.drawString(10,y-40, fur["comment"])
                 furniture_pictures=furniture[j]["pictures"]
+                xx=10
                 
-                
+                if (counter!=0):
+                    y=y-50-counter*10
+                else:
+                    y-=50
+                for k in range(len(furniture_pictures)):
+                    pic_path=Path(str(settings.BASE_DIR)+furniture_pictures[k]["image"])
+                    x.drawImage(pic_path, xx, y-100, width=100, height=100)
+                    if (k%3==2):
+                        y=y-200
+                    if (y<0):
+                        x.showPage()
+                        page_counter+=1
+                        x.drawString(300,40,str(page_counter))
+                        
+                        y=780
+                        xx=10
+                    else:
+                        xx+=200
+                    if (k==len(furniture_pictures)-1):
+                        y-=110   
+                y-=40
+                if(y<0):
+                    x.showPage()
+                    page_counter+=1
+                    x.drawString(300,40,str(page_counter))
+                    y=780
+                    
+            x.showPage()
+            page_counter+=1
+            x.drawString(300,40,str(page_counter))
+            meters=final_ans["property"]["meters"]
+            xx=10
+            y=780
+            x.setFontSize(18)
+            x.drawString(10,y, "Meters: ")
+            x.setFontSize(12)
+            
+            for i in range(len(meters)):
+                x.drawString(10,y-10,"-"*400)
+                x.drawString(10,y-20, "Meter Type: "+meters[i]["metertype"][0]["meters"])
+                x.drawString(250,y-20, "Meter Value: "+str(meters[i]["meter"]["metervalue"]))
+                if (meters[i]["meter"]["pictureurl"]):
+                    pic_path=Path(str(settings.BASE_DIR)+meters[i]["meter"]["pictureurl"])
+                    x.drawImage(pic_path, xx, y-130, width=100, height=100)
+                    y-=130
+                    continue
+                y-=50
+                if(y<0):
+                    x.showPage()
+                    page_counter+=1
+                    x.drawString(300,40,str(page_counter))
+            if(len(meters)>5):
+                x.showPage()
+                page_counter+=1
+                x.drawString(300,40,str(page_counter))
+                xx=10
+                y=780
+            keys=final_ans["property"]["propertykeys"]
+            y-=50
+            x.setFontSize(18)
+            x.drawString(10,y, "keys: ")
+            x.setFontSize(12)
+            for i in range(len(keys)):
+                x.drawString(10,y-10,"-"*400)
+                x.drawString(10,y-20, "key  Type: "+keys[i]["key"][0]["types"])
+                x.drawString(250,y-20, "Key count: "+str(keys[i]["propertykey"]["count"]))
+                y-=50    
+                if(y<0):
+                    x.showPage()
+                    page_counter+=1
+                    x.drawString(300,40,str(page_counter))
                 
                 
             
             
         
         x.showPage()
-
+        page_counter+=1
+        x.drawString(300,40,str(page_counter))
         # draw furnitures 
         x.drawString(100,780, "landlord name: "+prop.landlord_signature_name)
         x.drawString(400,780, "tenant name: "+prop.tenant_signature_name)
