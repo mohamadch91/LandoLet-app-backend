@@ -230,7 +230,7 @@ class GeneratePDF(APIView):
             rtype=room_types.filter(id=room.roomtypesid.id)
             rs=RoomTypesSerializer(rtype,many=True)
             pictures=room_pictures.filter(roomsid=room.id)
-            pictures=RoomPictureSerializer(pictures,many=True)
+            room_pictures=RoomPictureSerializer(pictures,many=True)
             fur_in_rooms=fur_in_room.filter(roomsid=room.id)
             fur_in_room_ans=[]
             for fs in fur_in_rooms:
@@ -249,7 +249,7 @@ class GeneratePDF(APIView):
             ans={
                 "room":roomser.data,
                 "roomtype":rs.data,
-                "pictures":pictures.data,
+                "pictures":room_pictures.data,
                 "furnituresinrooms":fur_in_room_ans
             }
             room_ans.append(ans)
@@ -276,11 +276,12 @@ class GeneratePDF(APIView):
         x.drawString(10,720, "Prperty postal code: "+prop.postalcode)
         x.showPage()
         
-        x.drawString(200,780, "landlord name: "+prop.landlord_signature_name)
-        x.drawString(200,780, "tenant name: "+prop.tenant_signature_name)
-        x.drawImage(os.path.join(settings.BASE_DIR, '/media/signatures/'+str(prop.landlord_signature)), 200, 600, width=200, height=200)
-        x.drawImage(prop.os.path.join(settings.BASE_DIR, '/media/signatures/'+str(prop.tenant_signature)), 200, 300, width=200, height=200)      
-        x.drawImage(os.path.join(settings.BASE_DIR, 'images.jpeg'), 250, 730, width=100, height=100)
+        x.drawString(100,780, "landlord name: "+prop.landlord_signature_name)
+        x.drawString(400,780, "tenant name: "+prop.tenant_signature_name)
+        print(str(settings.BASE_DIR)+'/media/props/signatures/'+str(prop.landlord_signature))
+        x.drawImage(os.path.join(settings.BASE_DIR,'/media/props/signatures/',prop.landlord_signature.path), 100, 600, width=150, height=150)
+        x.drawImage(os.path.join(settings.BASE_DIR,'/media/props/signatures/',prop.landlord_signature.path), 400, 600, width=150, height=150)      
+        # x.drawImage(str(settings.BASE_DIR)+'images.jpg', 250, 730, width=100, height=100)
         x.save()
         buffer.seek(0)
         return FileResponse(buffer, as_attachment=True, filename='test.pdf')
