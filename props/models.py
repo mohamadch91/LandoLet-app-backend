@@ -100,7 +100,7 @@ class Propertytypes(models.Model):
 
 class PropertyComment(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)   
-    property_id=models.ForeignKey(Properties,db_column="PropertyId",blank=True,null=True,on_delete=models.CASCADE,db_index=True)
+    property=models.ForeignKey(Properties,db_column="PropertyId",blank=True,null=True,on_delete=models.CASCADE,db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
     comment=models.TextField(db_column="Comment",blank=True,null=True,db_index=True)

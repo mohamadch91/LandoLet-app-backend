@@ -308,10 +308,19 @@ class MeterReadingView(generics.RetrieveUpdateDestroyAPIView):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request, *args, **kwargs):
-           id=request.query_params.get('id')
+           id=request.query_params.get('id',None)
            if(id is not None):
                 x=get_object_or_404(Meterreading,id=id)
                 x.delete()
                 return Response({"message":"Delete succesfully"},status=status.HTTP_204_NO_CONTENT)
            else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)  
+            
+
+class PropertyCommentView(APIView):
+    permission_classes= (IsAuthenticated,)
+    def get(self,request):
+        p_id=request.query_paramas.get('id',None)
+        if (p_id is None):
+            return Response({"message":"Need property id to see commnets"},status=status.HTTP_400_BAD_REQUEST)
+        comments=PropertyComment.objects.filter()
