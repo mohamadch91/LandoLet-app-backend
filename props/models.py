@@ -1,5 +1,3 @@
-from pyexpat import model
-from turtle import ondrag
 from django.db import models
 
 # Create your models here.
@@ -106,6 +104,7 @@ class PropertyComment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)   
     comment=models.TextField(db_column="Comment",blank=True,null=True,db_index=True)
+    user=models.ForeignKey(settings.AUTH_USER_MODEL,db_column='userId',on_delete= models.CASCADE,blank=True,null=True,db_index=True)
     class Meta:
         db_table = 'PropertyComment'
     
