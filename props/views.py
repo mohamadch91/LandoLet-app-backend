@@ -345,3 +345,10 @@ class PropertyCommentView(APIView):
         comment.comment=request.data["comment"]
         comment.save()
         return Response({"message":"comment edited succesfully"},status=status.HTTP_202_ACCEPTED)
+    def delete(self,request):
+        if ("id" not in request.data):
+            return Response({"message": "id is required"},status=status.HTTP_400_BAD_REQUEST)
+        comment=get_object_or_404(PropertyComment,id=request.data["id"])
+        comment.delete()
+        return Response({"message":"comment deleted succesfully"},status=status.HTTP_205_RESET_CONTENT)
+        
