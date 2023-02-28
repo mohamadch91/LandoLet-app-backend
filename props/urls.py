@@ -15,4 +15,5 @@ urlpatterns = [
     path('meterT/',MeterTypeView.as_view(), name='Meter_type'),
     path('meter_add/', RegisterMeterReadingView.as_view(), name='Meter_add'),
     path('meter/',MeterReadingView.as_view(), name='Meter'),
+    path('comment',PropertyCommentView.as_view(),name=" property comment")
 ]
