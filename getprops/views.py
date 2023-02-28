@@ -187,7 +187,7 @@ class SendtoTenantView(APIView):
 
 
 class SendtoOwner(APIView):
-    permission_classes = (IsAuthenticated)
+    permission_classes = (IsAuthenticated,)
     def post (self,request):
         full_name=request.data["full_name"]
         signature=request.data["signature"]
