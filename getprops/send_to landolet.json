@@ -1,0 +1,20 @@
+URL : localhost:8000/getprops/send_to_landolet/
+
+METHOD : POST 
+
+BODY : FORM DATA
+
+{
+    "p_id": 1,
+    "signature": "file",
+    "full_name": "Arian choopan"
+    
+}
+
+
+RESPONSE:
+ 
+{
+    "message": "property sent to owner"
+}
+
