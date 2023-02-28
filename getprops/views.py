@@ -159,10 +159,12 @@ class SendtoTenantView(APIView):
         signature=request.data["signature"]
         if(full_name==None or signature==None):
             return Response({"message":"need full name and signature in request"},status=status.HTTP_400_BAD_REQUEST)
-        prop_id=request.data["p_id"]
-        prop=get_object_or_404(Properties,id=prop_id)
-        if(prop_id==None):
+        if('p_id' not in request.data):
               return Response({"message":"need property id in request"},status=status.HTTP_400_BAD_REQUEST)
+        prop_id=request.data["p_id"]
+        
+        prop=get_object_or_404(Properties,id=prop_id)
+        
         if( prop.usersownerid.id!=request.user.id):
             return Response({
     "message": "you are not owner of this property"
@@ -190,10 +192,11 @@ class SendtoOwner(APIView):
         signature=request.data["signature"]
         if(full_name==None or signature==None):
             return Response({"message":"need full name and signature in request"},status=status.HTTP_400_BAD_REQUEST)
+        if('p_id' not  in request.data):
+              return Response({"message":"need property id in request"},status=status.HTTP_400_BAD_REQUEST)
         prop_id=request.data["p_id"]
         prop=get_object_or_404(Properties,id=prop_id)
-        if(prop_id==None):
-              return Response({"message":"need property id in request"},status=status.HTTP_400_BAD_REQUEST)
+        
         if( prop.userstenantid.id!=request.user.id):
             return Response({
     "message": "you are not tenant  of this property"
