@@ -336,5 +336,12 @@ class PropertyCommentView(APIView):
         serializer=PropertyCommentSerializer(new_data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"message":"comment added to property"},status=status.HTTP_200_OK)
+            return Response({"message":"comment added to property"},status=status.HTTP_201_CREATED)
         return Response({"message":"Please complete data correctly "},status=status.HTTP_400_BAD_REQUEST)
+    def put(self,request):
+        if ("id" not in request.data):
+            return Response({"message": "id is required"},status=status.HTTP_400_BAD_REQUEST)
+        comment=get_object_or_404(PropertyComment,id=request.data["id"])
+        comment.comment=request.data["comment"]
+        comment.save()
+        return Response({"message":"comment edited succesfully"},status=status.HTTP_202_ACCEPTED)
