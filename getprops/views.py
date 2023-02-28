@@ -172,14 +172,66 @@ class SendtoTenantView(APIView):
         if(tenant_id==None):
               return Response({"message":"need tenant id in request"},status=status.HTTP_400_BAD_REQUEST)
         prop.userstenantid=tenant
-        prop.signature=signature
-        prop.signature_name=full_name
+        prop.landlord_signature=signature
+        prop.landlord_signature_name=full_name
         prop.status = 1
         prop.save()
         return Response({
     "message": "property sent to tenant"
 },status=status.HTTP_200_OK)
         
+
+
+
+class SendtoOwner(APIView):
+    permission_classes = (IsAuthenticated)
+    def post (self,request):
+        full_name=request.data["full_name"]
+        signature=request.data["signature"]
+        if(full_name==None or signature==None):
+            return Response({"message":"need full name and signature in request"},status=status.HTTP_400_BAD_REQUEST)
+        prop_id=request.data["p_id"]
+        prop=get_object_or_404(Properties,id=prop_id)
+        if(prop_id==None):
+              return Response({"message":"need property id in request"},status=status.HTTP_400_BAD_REQUEST)
+        if( prop.userstenantid.id!=request.user.id):
+            return Response({
+    "message": "you are not tenant  of this property"
+},status=status.HTTP_403_FORBIDDEN)
+        tenant_id=request.data["t_email"]
+        tenant=get_object_or_404(User,email=tenant_id)
+        if(tenant_id==None):
+              return Response({"message":"need tenant id in request"},status=status.HTTP_400_BAD_REQUEST)
+        prop.userstenantid=tenant
+        prop.tenant_signature=signature
+        prop.tenant_signature_name=full_name
+        prop.status = 2
+        prop.save()
+        return Response({
+    "message": "property sent back to owner"
+},status=status.HTTP_200_OK)
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class GeneratePDF(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self, request, **kwargs):
