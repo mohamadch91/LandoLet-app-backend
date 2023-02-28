@@ -326,3 +326,15 @@ class PropertyCommentView(APIView):
         comments=PropertyComment.objects.filter(property=p_id)
         ser=PropertyCommentSerializer(comments,many=True)
         return Response(ser.data,status=status.HTTP_200_OK)
+    
+    def post(self,request):
+        new_data={
+            "property":request.data["property"],
+            "comment":request.data["comment"],
+            "user":request.user.id
+        }    
+        serializer=PropertyCommentSerializer(new_data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message":"comment added to property"},status=status.HTTP_200_OK)
+        return Response({"message":"Please complete data correctly "},status=status.HTTP_400_BAD_REQUEST)
