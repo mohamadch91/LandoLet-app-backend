@@ -73,7 +73,7 @@ class PropertyDetail(generics.ListAPIView):
         prop=get_object_or_404(Properties,id=prop_id)
         
         ser=propertySerilizer(prop,many=False)
-        if(ser.data["usersownerid"]!=request.user.id):
+        if(ser.data["usersownerid"]!=request.user.id and ser.data["userstenantid"]!=request.user.id):
             return Response({
     "message": "you are not owner of this property"
 },status=status.HTTP_403_FORBIDDEN)
