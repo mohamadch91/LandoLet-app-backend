@@ -75,7 +75,7 @@ class PropertyDetail(generics.ListAPIView):
         ser=propertySerilizer(prop,many=False)
         if(ser.data["usersownerid"]!=request.user.id and ser.data["userstenantid"]!=request.user.id):
             return Response({
-    "message": "you are not owner of this property"
+    "message": "you are not allowed to see this property"
 },status=status.HTTP_403_FORBIDDEN)
         meter_reading=Meterreading.objects.all().filter(propertiesid=prop_id)
         property_key=Propertykeys.objects.all().filter(propertiesid=prop_id)
@@ -218,7 +218,7 @@ class GeneratePDF(APIView):
         ser=propertySerilizer(prop,many=False)
         if(ser.data["usersownerid"]!=request.user.id and ser.data["userstenantid"]!=request.user.id):
             return Response({
-    "message": "you are not owner of this property"
+    "message": "you are not allowed to see this property"
 },status=status.HTTP_403_FORBIDDEN)
         meter_reading=Meterreading.objects.all().filter(propertiesid=prop_id)
         property_key=Propertykeys.objects.all().filter(propertiesid=prop_id)
