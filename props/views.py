@@ -323,4 +323,6 @@ class PropertyCommentView(APIView):
         p_id=request.query_paramas.get('id',None)
         if (p_id is None):
             return Response({"message":"Need property id to see commnets"},status=status.HTTP_400_BAD_REQUEST)
-        comments=PropertyComment.objects.filter()
+        comments=PropertyComment.objects.filter(property=p_id)
+        ser=PropertyCommentSerializer(comments,many=True)
+        return Response(ser.data,status=status.HTTP_200_OK)
