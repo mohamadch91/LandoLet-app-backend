@@ -22,3 +22,13 @@ comments for one property
 
 METHOD POST 
 
+
+BODY  JSON 
+
+{
+"property" : 48,
+"comment" : "new comment for this property"
+}
+
+RESPONSE 
+

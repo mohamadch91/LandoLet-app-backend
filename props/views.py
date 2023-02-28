@@ -338,7 +338,7 @@ class PropertyCommentView(APIView):
             "comment":request.data["comment"],
             "user":request.user.id
         }    
-        serializer=PropertyCommentSerializer(new_data)
+        serializer=PropertyCommentSerializer(data=new_data)
         if serializer.is_valid():
             serializer.save()
             return Response({"message":"comment added to property"},status=status.HTTP_201_CREATED)
