@@ -320,11 +320,16 @@ class MeterReadingView(generics.RetrieveUpdateDestroyAPIView):
 class PropertyCommentView(APIView):
     permission_classes= (IsAuthenticated,)
     def get(self,request):
-        p_id=request.query_paramas.get('id',None)
+        p_id=request.query_params.get('id',None)
         if (p_id is None):
             return Response({"message":"Need property id to see commnets"},status=status.HTTP_400_BAD_REQUEST)
         comments=PropertyComment.objects.filter(property=p_id)
         ser=PropertyCommentSerializer(comments,many=True)
+        final_ans=[]
+        for x in ser.data:
+            new_data=x
+            new_data["email"]=get_object_or_404(User,id=x['user']).email
+            final_ans.append(new_data)
         return Response(ser.data,status=status.HTTP_200_OK)
     
     def post(self,request):
