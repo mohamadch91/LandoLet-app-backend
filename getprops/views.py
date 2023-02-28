@@ -169,10 +169,11 @@ class SendtoTenantView(APIView):
             return Response({
     "message": "you are not owner of this property"
 },status=status.HTTP_403_FORBIDDEN)
+        if('t_email' not in request.data):
+              return Response({"message":"need tenant id in request"},status=status.HTTP_400_BAD_REQUEST)    
         tenant_id=request.data["t_email"]
         tenant=get_object_or_404(User,email=tenant_id)
-        if(tenant_id==None):
-              return Response({"message":"need tenant id in request"},status=status.HTTP_400_BAD_REQUEST)
+        
         prop.userstenantid=tenant
         prop.landlord_signature=signature
         prop.landlord_signature_name=full_name
@@ -200,12 +201,7 @@ class SendtoOwner(APIView):
         if( prop.userstenantid.id!=request.user.id):
             return Response({
     "message": "you are not tenant  of this property"
-},status=status.HTTP_403_FORBIDDEN)
-        tenant_id=request.data["t_email"]
-        tenant=get_object_or_404(User,email=tenant_id)
-        if(tenant_id==None):
-              return Response({"message":"need tenant id in request"},status=status.HTTP_400_BAD_REQUEST)
-        prop.userstenantid=tenant
+},status=status.HTTP_403_FORBIDDEN)        
         prop.tenant_signature=signature
         prop.tenant_signature_name=full_name
         prop.status = 2
