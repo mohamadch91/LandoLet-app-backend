@@ -69,3 +69,6 @@ RESPONSE
 {
     "message": "comment deleted succesfully"
 }
+
+
+** for DELETE PUT POST you don't need query param in URL
