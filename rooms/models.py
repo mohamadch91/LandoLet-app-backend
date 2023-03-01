@@ -13,6 +13,7 @@ class Roompictures(models.Model):
     roomsid = models.ForeignKey('Rooms', models.CASCADE, db_column='RoomsId',db_index=True)   
     image = models.ImageField(db_column='URL', blank=True, null=True)   
     comment = models.TextField(db_column='Comment', blank=True, null=True)   
+    t_comment=models.TextField(db_column="T_Comment",blank=True ,null=True)
     class Meta:
         # managed = False
         db_table = 'RoomPictures'
@@ -64,6 +65,7 @@ class Furnituresinrooms(models.Model):
     roomsid = models.ForeignKey('Rooms', models.CASCADE, db_column='RoomsId',blank=True ,null=True,db_index=True)   
     quantity = models.IntegerField(db_column='Quantity')   
     comment=models.TextField(db_column="Comment",blank=True ,null=True)
+    t_comment=models.TextField(db_column="T_Comment",blank=True ,null=True)
 
     class Meta:
         # managed = False
