@@ -55,7 +55,7 @@ class User(AbstractUser):
     first_name = models.TextField(db_column='FirstName', blank=True, null=True)   
     last_name = models.TextField(db_column='LastName', blank=True, null=True)   
     email = models.EmailField(db_column='Email',unique=True, blank=True, null=True,db_index=True)    
-    postal_code = models.IntegerField(db_column='PostalCode', blank=True, null=True)   
+    postal_code = models.TextField(db_column='PostalCode', blank=True, null=True)   
     full_address = models.TextField(db_column='FullAddress', blank=True, null=True)   
     phone_no = models.IntegerField(db_column='PhoneNo', blank=True, null=True)   
     USERNAME_FIELD = 'email'

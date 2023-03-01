@@ -107,7 +107,6 @@ class PropertyDetail(generics.ListAPIView):
         queryset=Furnitures.objects.all().filter(user_id=request.user)
         q1=Furnitures.objects.all().filter(is_default=True)
         fur=q1|queryset
-
         fur_in_room_pictures=Furnituresinroomspictures.objects.all()
         room_ans=[]
         for room in rooms.iterator():
