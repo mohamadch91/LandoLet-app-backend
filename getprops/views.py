@@ -114,7 +114,7 @@ class PropertyDetail(generics.ListAPIView):
             rtype=room_types.filter(id=room.roomtypesid.id)
             rs=RoomTypesSerializer(rtype,many=True)
             pictures=room_pictures.filter(roomsid=room.id)
-            room_pictures=RoomPictureSerializer(pictures,many=True)
+            room_picturess=RoomPictureSerializer(pictures,many=True)
             fur_in_rooms=fur_in_room.filter(roomsid=room.id)
             fur_in_room_ans=[]
             for fs in fur_in_rooms:
@@ -133,7 +133,7 @@ class PropertyDetail(generics.ListAPIView):
             ans={
                 "room":roomser.data,
                 "roomtype":rs.data,
-                "pictures":room_pictures.data,
+                "pictures":room_picturess.data,
                 "furnituresinrooms":fur_in_room_ans
             }
             room_ans.append(ans)
