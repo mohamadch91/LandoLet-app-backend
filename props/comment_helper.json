@@ -32,3 +32,40 @@ BODY  JSON
 
 RESPONSE 
 
+{
+    "message":"comment added to property"
+}
+
+
+edit comment 
+
+METHOD PUT 
+
+BODY 
+
+{
+"id":2,
+"comment" : "new" 
+}
+
+RESPONSE
+
+{
+    "message": "comment edited succesfully"
+}
+
+delete 
+
+METHOD DELETE 
+
+body 
+
+{
+    "id": 2 
+}
+
+RESPONSE 
+
+{
+    "message": "comment deleted succesfully"
+}
