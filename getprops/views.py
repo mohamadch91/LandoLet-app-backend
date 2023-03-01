@@ -29,11 +29,8 @@ class PropsView(generics.ListAPIView):
         res=[]
         all_rooms=Rooms.objects.all()
         room_types=Roomtypes.objects.all()
-        statuss=PropertyComment.objects.all()
         for e in props.iterator():
             rooms=all_rooms.filter(propertiesid=e.id)
-            stat=statuss.filter(property_id=e.id)
-            stat=PropertyCommentSerializer(stat,many=True)
             proptype=Propertytypes.objects.all().filter(id=e.propertytypesid.id)
             propertytype = propertyTypeSerializer(proptype,many=True)
             rooms = RoomSerializer(rooms,many=True)
@@ -52,7 +49,6 @@ class PropsView(generics.ListAPIView):
                 "property":{
                     "data":property.data,
                     "rooms":room_ans,
-                    "comments":stat.data,
                     'propertytype':propertytype.data,
                 }
             }
