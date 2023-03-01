@@ -196,7 +196,10 @@ class SendtoOwner(APIView):
 },status=status.HTTP_403_FORBIDDEN)        
         prop.tenant_signature=signature
         prop.tenant_signature_name=full_name
-        prop.status = 2
+        if(prop.comment !=None):
+            prop.status = 3
+        else:    
+            prop.status = 2
         prop.save()
         return Response({
     "message": "property sent back to owner"

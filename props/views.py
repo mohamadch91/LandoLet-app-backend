@@ -96,7 +96,7 @@ class PropertyView(generics.RetrieveUpdateDestroyAPIView):
             return Response(data=serializers.data,status=status.HTTP_200_OK)
     def put(self, request, *args, **kwargs):
         id=request.query_params.get('id')
-
+        
         if(id is not None):
             queryset=self.queryset.all().filter(id=id).first()
             serializer = self.serializer_class(queryset, data=request.data)
