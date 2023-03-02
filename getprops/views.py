@@ -17,6 +17,7 @@ from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from django.conf import settings
 from pathlib import Path
+
 class PropsView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Properties.objects.all()
