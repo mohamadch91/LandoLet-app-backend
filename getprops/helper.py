@@ -10,4 +10,7 @@ def find_status(property):
         return None
 
 def find_type(propertytype):
-    pass
+    if(propertytype == 9):
+        return "/assets/01.jpg"
+    else:
+        return "/assets/t_"+str(propertytype)+".png"

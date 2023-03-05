@@ -300,8 +300,8 @@ class GeneratePDF(APIView):
         page_counter=1
         x.drawString(300,40,str(page_counter))
         pic_path=Path(str(settings.BASE_DIR)+"/assets/01.jpg")
-        x.drawImage(pic_path, 270, 780, width=50, height=50)
-        x.drawString(272,750, "Landolet")
+        x.drawImage(pic_path, 270, 780, width=50, height=50,mask='auto')
+        x.drawString(268,750, "Land O Let")
         x.drawString(272,720, find_status(prop))
         
         x.drawString(10,800, "owner: "+prop.usersownerid.email)
@@ -309,9 +309,11 @@ class GeneratePDF(APIView):
             x.drawString(10,780, "landlord: "+prop.userslandlordid.email)
         if (prop.userstenantid):
             x.drawString(10,760, "tenant: "+prop.userstenantid.email)
-        x.drawString(450,800, "address: "+prop.fulladdress)
-        x.drawString(450,780, "postal code: "+prop.postalcode)
-        x.drawString(450,760, "postal type: "+prop.propertytypesid.types)
+        x.drawString(400,800, "address: "+prop.fulladdress)
+        x.drawString(400,780, "postal code: "+prop.postalcode)
+        pic_path=Path(str(settings.BASE_DIR)+find_type(prop.propertytypesid.id))
+        x.drawImage(pic_path, 440, 720, width=50, height=50,mask='auto')
+        x.drawString(400,700, ""+prop.propertytypesid.types)
         
         # rooms details
         rooms=final_ans["property"]["rooms"]
