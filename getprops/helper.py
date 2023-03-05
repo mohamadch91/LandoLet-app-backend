@@ -8,3 +8,6 @@ def find_status(property):
         return "Accepted with comment"
     else: 
         return None
+
+def find_type(propertytype):
+    pass

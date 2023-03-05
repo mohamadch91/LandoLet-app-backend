@@ -299,22 +299,26 @@ class GeneratePDF(APIView):
         # propert details
         page_counter=1
         x.drawString(300,40,str(page_counter))
-        pic_path=Path(str(settings.BASE_DIR)+"/logo.svg")
-        x.drawImage(pic_path, 300, 800, width=100, height=100)
+        pic_path=Path(str(settings.BASE_DIR)+"/assets/01.jpg")
+        x.drawImage(pic_path, 270, 780, width=50, height=50)
+        x.drawString(272,750, "Landolet")
+        x.drawString(272,720, find_status(prop))
         
         x.drawString(10,800, "owner: "+prop.usersownerid.email)
         if (prop.userslandlordid):
             x.drawString(10,780, "landlord: "+prop.userslandlordid.email)
         if (prop.userstenantid):
             x.drawString(10,760, "tenant: "+prop.userstenantid.email)
-        x.drawString(10,740, "address: "+prop.fulladdress)
-        x.drawString(10,720, "postal code: "+prop.postalcode)
+        x.drawString(450,800, "address: "+prop.fulladdress)
+        x.drawString(450,780, "postal code: "+prop.postalcode)
+        x.drawString(450,760, "postal type: "+prop.propertytypesid.types)
+        
         # rooms details
         rooms=final_ans["property"]["rooms"]
-        x.setFontSize(18)
+        x.setFontSize(16)
         
         x.drawString(10,690, "Rooms: ")
-        x.setFontSize(12)
+        x.setFontSize(11)
         y=680
         for i in range(len(rooms)):
             x.drawString(10,y-10,"-"*400)
@@ -354,10 +358,10 @@ class GeneratePDF(APIView):
             xx=10
             y=780
             furniture=rooms[i]["furnituresinrooms"]
-            x.setFontSize(18)
+            x.setFontSize(16)
             
             x.drawString(10,y, "Furniture: ")
-            x.setFontSize(12)
+            x.setFontSize(11)
             
             for j in range(len(furniture)):
                 x.drawString(10,y-10,"-"*400)
@@ -415,9 +419,9 @@ class GeneratePDF(APIView):
             meters=final_ans["property"]["meters"]
             xx=10
             y=780
-            x.setFontSize(18)
+            x.setFontSize(16)
             x.drawString(10,y, "Meters: ")
-            x.setFontSize(12)
+            x.setFontSize(11)
             
             for i in range(len(meters)):
                 x.drawString(10,y-10,"-"*400)
@@ -441,9 +445,9 @@ class GeneratePDF(APIView):
                 y=780
             keys=final_ans["property"]["propertykeys"]
             y-=50
-            x.setFontSize(18)
+            x.setFontSize(16)
             x.drawString(10,y, "keys: ")
-            x.setFontSize(12)
+            x.setFontSize(11)
             for i in range(len(keys)):
                 x.drawString(10,y-10,"-"*400)
                 x.drawString(10,y-20, "key  Type: "+keys[i]["key"][0]["types"])
@@ -461,9 +465,9 @@ class GeneratePDF(APIView):
         x.showPage()
         page_counter+=1
         x.drawString(300,40,str(page_counter))
-        x.setFontSize(18)
+        x.setFontSize(16)
         x.drawString(10,800, "Signatures : ")
-        x.setFontSize(12)
+        x.setFontSize(11)
         # draw furnitures 
         x.drawString(60,780, "landlord : "+prop.landlord_signature_name)
         x.drawString(370,780, "tenant : "+prop.tenant_signature_name)
