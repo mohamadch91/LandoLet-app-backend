@@ -17,6 +17,7 @@ from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from django.conf import settings
 from pathlib import Path
+from .helper import *
 
 class PropsView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
@@ -298,6 +299,9 @@ class GeneratePDF(APIView):
         # propert details
         page_counter=1
         x.drawString(300,40,str(page_counter))
+        pic_path=Path(str(settings.BASE_DIR)+"/logo.svg")
+        x.drawImage(pic_path, 300, 800, width=100, height=100)
+        
         x.drawString(10,800, "owner: "+prop.usersownerid.email)
         if (prop.userslandlordid):
             x.drawString(10,780, "landlord: "+prop.userslandlordid.email)
